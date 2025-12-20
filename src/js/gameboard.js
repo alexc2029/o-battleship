@@ -2,24 +2,36 @@ import { Ship } from "./ship.js";
 
 class Square {
 	#isHit = false;
+	#isMissed = false;
 	constructor(ship) {
 		this.ship = ship;
 	}
 	hit() {
+		if (!this.#isHit) this.ship.hit();
 		this.#isHit = true;
 	}
 	isHit() {
 		return this.#isHit;
 	}
+	miss() {
+		this.#isMissed = true;
+	}
+	isMissed() {
+		return this.#isMissed;
+	}
 }
 
 export class Gameboard {
 	#board;
+	#ships = [];
 	constructor() {
-		this.#board = Array.from(Array(11), () => new Array(11));
+		this.#board = Array.from({ length: 11 }, () =>
+			Array.from({ length: 11 }, () => new Square(null)),
+		);
 	}
 	place(coordsArr, shipLength) {
 		let ship = new Ship(shipLength);
+		this.#ships.push(ship);
 		if (coordsArr[0] + shipLength > 10)
 			throw new Error("Cannot place ship outside grid bounds");
 		for (let i = coordsArr[0]; i < coordsArr[0] + shipLength; i++) {
@@ -32,6 +44,15 @@ export class Gameboard {
 	}
 	at(coordsArr) {
 		return this.#board?.[coordsArr[0]]?.[coordsArr[1]];
+	}
+	receiveAttack(coordsArr) {
+		if (this.at([coordsArr[0], coordsArr[1]]).ship)
+			this.#board[coordsArr[0]][coordsArr[1]].hit();
+		else this.#board[coordsArr[0]][coordsArr[1]].miss();
+	}
+	allSunk() {
+		for (let ship of this.#ships) if (!ship.isSunk()) return false;
+		return true;
 	}
 }
 
