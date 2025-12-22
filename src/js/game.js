@@ -1,3 +1,4 @@
+import { DisplayController } from "./dom.js";
 import { Player } from "./player.js";
 
 function populateBoard(player) {
@@ -18,4 +19,5 @@ function GameController() {
 	let computer = new Player();
 	populateBoard(player);
 	populateBoard(computer);
+	import("./dom.js");
 }

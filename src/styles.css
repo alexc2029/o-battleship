@@ -46,3 +46,27 @@ h6 {
 ul {
 	list-style-type: none;
 }
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background-color: #181a1b;
+	color: white;
+}
+
+.gameboards-container {
+	display: flex;
+	justify-content: center;
+	gap: 150px;
+	& > .gameboard {
+		display: grid;
+		grid-template-columns: repeat(10, 35px);
+		grid-template-rows: repeat(10, 35px);
+		gap: 1px;
+	}
+	& > .gameboard > div {
+		outline: 1px solid rgb(17, 153, 17);
+	}
+}
