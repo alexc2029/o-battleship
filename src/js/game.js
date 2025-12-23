@@ -14,10 +14,11 @@ function populateBoard(player) {
 	player.gameboard.place([10, 10], 1);
 }
 
-function GameController() {
+(function GameController() {
 	let player = new Player();
 	let computer = new Player();
 	populateBoard(player);
 	populateBoard(computer);
 	import("./dom.js");
-}
+	DisplayController.updateGameboards(player.gameboard, computer.gameboard);
+})();
