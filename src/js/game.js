@@ -1,5 +1,6 @@
 import { DisplayController } from "./dom.js";
 import { Player } from "./player.js";
+import { addAttackListeners } from "./events.js";
 
 function populateBoard(player) {
 	player.gameboard.place([1, 1], 4);
@@ -21,4 +22,5 @@ function populateBoard(player) {
 	populateBoard(computer);
 	import("./dom.js");
 	DisplayController.renderShips(player.gameboard);
+	addAttackListeners(computer.gameboard);
 })();
