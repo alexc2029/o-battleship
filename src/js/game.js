@@ -20,5 +20,5 @@ function populateBoard(player) {
 	populateBoard(player);
 	populateBoard(computer);
 	import("./dom.js");
-	DisplayController.updateGameboards(player.gameboard, computer.gameboard);
+	DisplayController.renderShips(player.gameboard);
 })();
