@@ -30,5 +30,17 @@ export const DisplayController = (() => {
 			}
 		}
 	};
-	return { renderShips };
+	const renderSquareHit = (square) => {
+		square.classList.add("hit");
+	};
+	const renderSquareMiss = (square) => {
+		square.classList.add("missed");
+	};
+	return {
+		renderShips,
+		renderSquareHit,
+		renderSquareMiss,
+		squaresPlayer,
+		squaresComputer,
+	};
 })();

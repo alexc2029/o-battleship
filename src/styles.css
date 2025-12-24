@@ -72,4 +72,10 @@ body {
 	& > .gameboard > div.ship {
 		background-color: lime;
 	}
+	& > .gameboard > div.missed {
+		background-color: gray;
+	}
+	& > .gameboard > div.hit {
+		background-color: red;
+	}
 }
