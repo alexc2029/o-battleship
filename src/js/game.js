@@ -1,5 +1,6 @@
 import { DisplayController } from "./dom.js";
 import { Player } from "./player.js";
+import { Computer } from "./computer.js";
 import { addAttackListeners } from "./events.js";
 
 function populateBoard(player) {
@@ -17,7 +18,7 @@ function populateBoard(player) {
 
 (function GameController() {
 	let player = new Player();
-	let computer = new Player();
+	let computer = new Computer();
 	populateBoard(player);
 	populateBoard(computer);
 	import("./dom.js");
