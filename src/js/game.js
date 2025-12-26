@@ -16,12 +16,20 @@ function populateBoard(player) {
 	player.gameboard.place([10, 10], 1);
 }
 
+function playerRound(gameboard, coordsArr, square) {
+	gameboard.receiveAttack(coordsArr);
+	if (gameboard.at(coordsArr).isHit())
+		DisplayController.renderSquareHit(square);
+	else DisplayController.renderSquareMiss(square);
+}
+
 (function GameController() {
-	let player = new Player();
-	let computer = new Computer();
-	populateBoard(player);
-	populateBoard(computer);
+	const players = [new Player(), new Computer()];
+
+	populateBoard(players[0]);
+	populateBoard(players[1]);
 	import("./dom.js");
-	DisplayController.renderShips(player.gameboard);
-	addAttackListeners(computer.gameboard);
+	DisplayController.renderShips(players[0].gameboard);
+
+	addAttackListeners(players[1].gameboard, playerRound);
 })();
