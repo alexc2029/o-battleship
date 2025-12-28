@@ -42,4 +42,15 @@ describe("gameboard tests", () => {
 		}
 		expect(gameboard.allSunk()).toBeFalsy;
 	});
+	test("random coords are between 0 and 10", () => {
+		expect(gameboard.getRandomCoords()[0]).toBeGreaterThanOrEqual(0);
+		expect(gameboard.getRandomCoords()[0]).toBeLessThanOrEqual(10);
+		expect(gameboard.getRandomCoords()[1]).toBeGreaterThanOrEqual(0);
+		expect(gameboard.getRandomCoords()[1]).toBeLessThanOrEqual(10);
+	});
+	test("already shot is true for a hit square", () => {
+		gameboard.receiveAttack([5, 5]);
+		expect(gameboard.alreadyShot([5, 5])).toBeTruthy;
+		expect(gameboard.alreadyShot([4, 5])).toBeFalsy;
+	});
 });

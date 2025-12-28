@@ -59,4 +59,13 @@ export class Gameboard {
 		for (let ship of this.#ships) if (!ship.isSunk()) return false;
 		return true;
 	}
+	getRandomCoords() {
+		let x = Math.floor(Math.random() * 11);
+		let y = Math.floor(Math.random() * 11);
+		return [x, y];
+	}
+	alreadyShot(coordsArr) {
+		let gameboardSquare = this.at([coordsArr[0], coordsArr[1]]);
+		return gameboardSquare.isHit() || gameboardSquare.isMissed();
+	}
 }
