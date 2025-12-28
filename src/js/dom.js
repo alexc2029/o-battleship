@@ -22,11 +22,14 @@ export const DisplayController = (() => {
 	const squaresComputer = document.querySelectorAll(
 		".gameboards-container > .gameboard:nth-child(2) > div",
 	);
+	const getSquareIndex = (coordsArr) => {
+		return (coordsArr[1] - 1) * 10 + (coordsArr[0] - 1);
+	};
 	const renderShips = (gameboard) => {
 		for (let i = 1; i <= 10; i++) {
 			for (let j = 1; j <= 10; j++) {
 				if (gameboard.at([i, j]).ship)
-					squaresPlayer[(j - 1) * 10 + (i - 1)].classList.add("ship");
+					squaresPlayer[getSquareIndex([i, j])].classList.add("ship");
 			}
 		}
 	};
@@ -40,6 +43,7 @@ export const DisplayController = (() => {
 		renderShips,
 		renderSquareHit,
 		renderSquareMiss,
+		getSquareIndex,
 		squaresPlayer,
 		squaresComputer,
 	};
