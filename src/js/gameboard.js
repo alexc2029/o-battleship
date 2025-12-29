@@ -60,8 +60,8 @@ export class Gameboard {
 		return true;
 	}
 	getRandomCoords() {
-		let x = Math.floor(Math.random() * 11);
-		let y = Math.floor(Math.random() * 11);
+		let x = Math.floor(Math.random() * 10 + 1);
+		let y = Math.floor(Math.random() * 10 + 1);
 		return [x, y];
 	}
 	alreadyShot(coordsArr) {
