@@ -39,6 +39,18 @@ export function processAttack(gameboard, coordsArr, square) {
 		if (activePlayer === players[1]) return;
 		processAttack(gameboard, coordsArr, square);
 	}
+	function computerRound() {
+		const computerAttackCoords = players[1].decideRandomAttack(
+			players[0].gameboard,
+		);
+		processAttack(
+			players[0].gameboard,
+			computerAttackCoords,
+			DisplayController.squaresPlayer[
+				DisplayController.getSquareIndex(computerAttackCoords)
+			],
+		);
+	}
 
 	addAttackListeners(players[1].gameboard, playerRound);
 })();
