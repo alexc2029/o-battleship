@@ -25,6 +25,10 @@ export function processAttack(gameboard, coordsArr, square) {
 
 (function GameController() {
 	const players = [new Player(), new Computer()];
+	let activePlayer = players[0];
+	const switchPlayerTurn = () => {
+		activePlayer = activePlayer === players[0] ? players[1] : players[0];
+	};
 
 	populateBoard(players[0]);
 	populateBoard(players[1]);
