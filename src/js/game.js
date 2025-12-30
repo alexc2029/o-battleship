@@ -16,7 +16,7 @@ function populateBoard(player) {
 	player.gameboard.place([10, 10], 1);
 }
 
-function playerRound(gameboard, coordsArr, square) {
+export function processAttack(gameboard, coordsArr, square) {
 	gameboard.receiveAttack(coordsArr);
 	if (gameboard.at(coordsArr).isHit())
 		DisplayController.renderSquareHit(square);
@@ -30,6 +30,11 @@ function playerRound(gameboard, coordsArr, square) {
 	populateBoard(players[1]);
 	import("./dom.js");
 	DisplayController.renderShips(players[0].gameboard);
+
+	function playerRound(gameboard, coordsArr, square) {
+		if (activePlayer === players[1]) return;
+		processAttack(gameboard, coordsArr, square);
+	}
 
 	addAttackListeners(players[1].gameboard, playerRound);
 })();
