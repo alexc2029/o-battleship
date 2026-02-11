@@ -47,5 +47,5 @@ export function GameController() {
 		);
 	}
 
-	addAttackListeners(players[1].gameboard, playerRound);
+	addAttackListeners(players[1].gameboard, playerRound, computerRound);
 }
