@@ -25,10 +25,6 @@ export function processAttack(gameboard, coordsArr, square) {
 
 export function GameController() {
 	const players = [new Player(), new Computer()];
-	let activePlayer = players[0];
-	const switchPlayerTurn = () => {
-		activePlayer = activePlayer === players[0] ? players[1] : players[0];
-	};
 
 	populateBoard(players[0]);
 	populateBoard(players[1]);
@@ -36,7 +32,6 @@ export function GameController() {
 	DisplayController.renderShips(players[0].gameboard);
 
 	function playerRound(gameboard, coordsArr, square) {
-		if (activePlayer === players[1]) return;
 		processAttack(gameboard, coordsArr, square);
 	}
 	function computerRound() {
