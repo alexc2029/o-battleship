@@ -23,7 +23,7 @@ export function processAttack(gameboard, coordsArr, square) {
 	else DisplayController.renderSquareMiss(square);
 }
 
-(function GameController() {
+export function GameController() {
 	const players = [new Player(), new Computer()];
 	let activePlayer = players[0];
 	const switchPlayerTurn = () => {
@@ -53,4 +53,4 @@ export function processAttack(gameboard, coordsArr, square) {
 	}
 
 	addAttackListeners(players[1].gameboard, playerRound);
-})();
+}

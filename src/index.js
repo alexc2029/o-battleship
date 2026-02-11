@@ -1,2 +1,3 @@
 import "./styles.css";
-import "./js/game.js";
+import { GameController } from "./js/game";
+GameController();
