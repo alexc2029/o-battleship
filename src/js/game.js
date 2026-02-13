@@ -23,10 +23,6 @@ export function processAttack(gameboard, coordsArr, square) {
 	else DisplayController.renderSquareMiss(square);
 }
 
-export function playerLost(player) {
-	if (player.gameboard.allSunk()) return true;
-	return false;
-}
 
 export function GameController() {
 	const players = [new Player(), new Computer()];
