@@ -1,5 +1,6 @@
 import { DisplayController } from "./dom";
 import { processAttack } from "./game";
+import { isGameOver } from "./game";
 
 jest.mock("./dom", () => {
 	return {
@@ -38,5 +39,28 @@ describe("game tests", () => {
 			expect(DisplayController.renderSquareMiss).toHaveBeenCalled();
 		});
 	});
+	describe("isGameOver tests", () => {
+		let mockPlayer1, mockPlayer2;
+		let mockPlayers;
+		beforeEach(() => {
+			mockPlayer1 = { name: "player1", lost: jest.fn() };
+			mockPlayer2 = { name: "player2", lost: jest.fn() };
+			mockPlayers = [mockPlayer1, mockPlayer2];
+		});
+		test("player1 has won", () => {
+			mockPlayer1.lost.mockReturnValue(false);
+			mockPlayer2.lost.mockReturnValue(true);
+			expect(isGameOver(mockPlayers)).toBe(mockPlayer1);
+		});
+		test("player2 has won", () => {
+			mockPlayer1.lost.mockReturnValue(true);
+			mockPlayer2.lost.mockReturnValue(false);
+			expect(isGameOver(mockPlayers)).toBe(mockPlayer2);
+		});
+		test("nobody has lost", () => {
+			mockPlayer1.lost.mockReturnValue(false);
+			mockPlayer2.lost.mockReturnValue(false);
+			expect(isGameOver(mockPlayers)).toBe(false);
+		});
 	});
 });
