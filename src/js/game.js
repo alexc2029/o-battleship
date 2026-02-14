@@ -23,6 +23,13 @@ export function processAttack(gameboard, coordsArr, square) {
 	else DisplayController.renderSquareMiss(square);
 }
 
+export function isGameOver(players) {
+	//returns winner
+	if (players[0].lost()) return players[1];
+	else if (players[1].lost()) return players[0];
+	return false;
+}
+
 export function GameController() {
 	const players = [new Player(), new Computer()];
 

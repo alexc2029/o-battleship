@@ -7,4 +7,8 @@ export class Player {
 		this.name = name;
 		this.gameboard = new Gameboard();
 	}
+	lost() {
+		if (this.gameboard.allSunk()) return true;
+		return false;
+	}
 }
