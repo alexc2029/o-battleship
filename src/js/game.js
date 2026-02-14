@@ -30,6 +30,13 @@ export function isGameOver(players) {
 	return false;
 }
 
+export function handleGameOver(players) {
+	const winner = isGameOver(players);
+	if (!winner) return false;
+	DisplayController.announceWinner(winner.name);
+	return winner;
+}
+
 export function GameController() {
 	const players = [new Player(), new Computer()];
 
@@ -54,5 +61,11 @@ export function GameController() {
 		);
 	}
 
-	addAttackListeners(players[1].gameboard, playerRound, computerRound);
+	addAttackListeners(
+		players[1].gameboard,
+		playerRound,
+		computerRound,
+		handleGameOver,
+		players,
+	);
 }
