@@ -53,11 +53,16 @@ export const DisplayController = (() => {
 	const renderSquareMiss = (square) => {
 		square.classList.add("missed");
 	};
+	const gameInfo = document.querySelector(".game-status");
+	const announceWinner = (playerName) => {
+		gameInfo.textContent = `${playerName} wins!`;
+	};
 	return {
 		renderShips,
 		renderSquareHit,
 		renderSquareMiss,
 		getSquareIndex,
+		announceWinner,
 		squaresPlayer,
 		squaresComputer,
 	};
