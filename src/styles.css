@@ -49,6 +49,7 @@ ul {
 
 body {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
@@ -60,22 +61,28 @@ body {
 	display: flex;
 	justify-content: center;
 	gap: 150px;
-	& > .gameboard {
+	& .gameboard-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 15px;
+	}
+	& .gameboard {
 		display: grid;
 		grid-template-columns: repeat(10, 35px);
 		grid-template-rows: repeat(10, 35px);
 		gap: 1px;
 	}
-	& > .gameboard > div {
+	& .gameboard > div {
 		outline: 1px solid rgb(17, 153, 17);
 	}
-	& > .gameboard > div.ship {
+	& .gameboard > div.ship {
 		background-color: lime;
 	}
-	& > .gameboard > div.missed {
+	& .gameboard > div.missed {
 		background-color: gray;
 	}
-	& > .gameboard > div.hit {
+	& .gameboard > div.hit {
 		background-color: red;
 	}
 }
