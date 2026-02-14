@@ -50,11 +50,31 @@ ul {
 body {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 	height: 100vh;
 	background-color: #181a1b;
 	color: white;
+	gap: 100px;
+	& > header {
+		padding-top: 20px;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		& > .title {
+			font-size: 30px;
+			font-weight: bold;
+		}
+		& > .game-status {
+			background-color: rgb(40, 39, 39);
+			width: 300px;
+			font-size: 19px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		& .rules > a {
+			color: lightgray;
+		}
+	}
 }
 
 .gameboards-container {
