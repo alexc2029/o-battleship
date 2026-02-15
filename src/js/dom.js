@@ -57,12 +57,20 @@ export const DisplayController = (() => {
 	const announceWinner = (playerName) => {
 		gameInfo.textContent = `${playerName} wins!`;
 	};
+	const announcePlayerTurn = (playerName) => {
+		gameInfo.textContent = `${playerName}'s turn.`;
+	};
+	const announceComputerTurn = () => {
+		gameInfo.textContent = `Computer's turn.`;
+	};
 	return {
 		renderShips,
 		renderSquareHit,
 		renderSquareMiss,
 		getSquareIndex,
 		announceWinner,
+		announcePlayerTurn,
+		announceComputerTurn,
 		squaresPlayer,
 		squaresComputer,
 	};

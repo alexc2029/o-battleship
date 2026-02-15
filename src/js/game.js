@@ -47,6 +47,7 @@ export function GameController() {
 
 	function playerRound(gameboard, coordsArr, square) {
 		processAttack(gameboard, coordsArr, square);
+		DisplayController.announceComputerTurn();
 	}
 	function computerRound() {
 		const computerAttackCoords = players[1].decideRandomAttack(
@@ -59,8 +60,9 @@ export function GameController() {
 				DisplayController.getSquareIndex(computerAttackCoords)
 			],
 		);
+		DisplayController.announcePlayerTurn(players[0].name);
 	}
-
+	DisplayController.announcePlayerTurn(players[0].name);
 	addAttackListeners(
 		players[1].gameboard,
 		playerRound,
