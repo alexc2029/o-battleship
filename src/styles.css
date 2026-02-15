@@ -53,12 +53,12 @@ body {
 	height: 100vh;
 	background-color: #181a1b;
 	color: white;
-	gap: 100px;
 	& > header {
 		padding-top: 20px;
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		margin-bottom: 100px;
 		& > .title {
 			font-size: 30px;
 			font-weight: bold;
@@ -73,6 +73,29 @@ body {
 		}
 		& .rules > a {
 			color: lightgray;
+		}
+	}
+	& > .play-button-container {
+		display: flex;
+		justify-content: center;
+		margin-top: 30px;
+		& > .play-button {
+			border: none;
+			background-color: darkgreen;
+			color: white;
+			font-size: 19px;
+			padding: 10px 20px;
+			border-radius: 15px;
+			text-align: center;
+			width: fit-content;
+		}
+		& > .play-button:hover {
+			background-color: rgb(3, 113, 3);
+			cursor: pointer;
+		}
+		& > .play-button:active {
+			transform: translateY(1px);
+			background-color: rgb(9, 130, 9);
 		}
 	}
 }
