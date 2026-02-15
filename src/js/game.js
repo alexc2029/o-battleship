@@ -51,6 +51,7 @@ export function GameController() {
 
 	function playerRound(gameboard, coordsArr, square) {
 		processAttack(gameboard, coordsArr, square);
+		DisplayController.announceComputerTurn();
 	}
 	async function computerRound() {
 		await waitOneSecond();
@@ -64,8 +65,9 @@ export function GameController() {
 				DisplayController.getSquareIndex(computerAttackCoords)
 			],
 		);
+		DisplayController.announcePlayerTurn(players[0].name);
 	}
-
+	DisplayController.announcePlayerTurn(players[0].name);
 	addAttackListeners(
 		players[1].gameboard,
 		playerRound,
