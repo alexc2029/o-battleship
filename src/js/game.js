@@ -16,10 +16,6 @@ function populateBoard(player) {
 	player.gameboard.place([10, 10], 1);
 }
 
-function waitOneSecond() {
-	return new Promise((resolve) => setTimeout(resolve, 1000));
-}
-
 export function processAttack(gameboard, coordsArr, square) {
 	gameboard.receiveAttack(coordsArr);
 	if (gameboard.at(coordsArr).isHit())
@@ -53,8 +49,7 @@ export function GameController() {
 		processAttack(gameboard, coordsArr, square);
 		DisplayController.announceComputerTurn();
 	}
-	async function computerRound() {
-		await waitOneSecond();
+	function computerRound() {
 		const computerAttackCoords = players[1].decideRandomAttack(
 			players[0].gameboard,
 		);
