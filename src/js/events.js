@@ -7,7 +7,10 @@ function waitOneSecond() {
 }
 
 let isRunning = false;
-
+let isGameReset = false;
+export function setGameReset() {
+	isGameReset = true;
+}
 export function addAttackListeners(
 	gameboard,
 	onClick,
@@ -20,12 +23,18 @@ export function addAttackListeners(
 		for (let j = 1; j <= 10; j++) {
 			const square = squares[(j - 1) * 10 + (i - 1)];
 			square.addEventListener("click", async () => {
+				isGameReset = false;
 				if (isRunning) return;
 				isRunning = true;
 				if (!checkOnEvery(checkParams))
 					onClick(gameboard, [i, j], square);
 				if (!checkOnEvery(checkParams)) {
 					await waitOneSecond();
+					if (isGameReset) {
+						isGameReset = false;
+						isRunning = false;
+						return;
+					}
 					afterOnClick();
 				}
 				checkOnEvery(checkParams);

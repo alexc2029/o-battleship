@@ -1,5 +1,6 @@
 import "./styles.css";
 import { GameController } from "./js/game";
+import { setGameReset } from "./js/events";
 const playButton = document.querySelector(".play-button");
 let firstPress = true;
 playButton.addEventListener("click", () => {
@@ -8,4 +9,5 @@ playButton.addEventListener("click", () => {
 		playButton.textContent = "Restart";
 	}
 	GameController();
+	setGameReset();
 });
