@@ -44,7 +44,7 @@ export function GameController() {
 	populateBoard(players[1]);
 	import("./dom.js");
 	DisplayController.renderShips(players[0].gameboard);
-
+	DisplayController.resetHitAndMiss();
 	function playerRound(gameboard, coordsArr, square) {
 		processAttack(gameboard, coordsArr, square);
 		DisplayController.announceComputerTurn();
