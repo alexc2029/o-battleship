@@ -53,6 +53,20 @@ export const DisplayController = (() => {
 	const renderSquareMiss = (square) => {
 		square.classList.add("missed");
 	};
+	const resetHitAndMiss = () => {
+		for (let i = 1; i <= 10; i++) {
+			for (let j = 1; j <= 10; j++) {
+				squaresPlayer[getSquareIndex([i, j])].classList.remove(
+					"hit",
+					"missed",
+				);
+				squaresComputer[getSquareIndex([i, j])].classList.remove(
+					"hit",
+					"missed",
+				);
+			}
+		}
+	};
 	const gameInfo = document.querySelector(".game-status");
 	const announceWinner = (playerName) => {
 		gameInfo.textContent = `${playerName} wins!`;
@@ -67,6 +81,7 @@ export const DisplayController = (() => {
 		renderShips,
 		renderSquareHit,
 		renderSquareMiss,
+		resetHitAndMiss,
 		getSquareIndex,
 		announceWinner,
 		announcePlayerTurn,
