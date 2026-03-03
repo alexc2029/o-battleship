@@ -35,7 +35,9 @@ const renderGameboards = () => {
 	gameboardsContainer.appendChild(gameboard2Container);
 	initPostRenderGameboards();
 };
-const wipeGameboards = () => {};
+const wipeGameboards = () => {
+	gameboardsContainer.innerHTML = "";
+};
 const initPostRenderGameboards = () => {
 	display.squaresPlayer = document.querySelectorAll(
 		".gameboards-container > .gameboard-container:nth-child(1) > .gameboard > div",
@@ -64,20 +66,6 @@ const renderSquareHit = (square) => {
 const renderSquareMiss = (square) => {
 	square.classList.add("missed");
 };
-const resetHitAndMiss = () => {
-	for (let i = 1; i <= 10; i++) {
-		for (let j = 1; j <= 10; j++) {
-			display.squaresPlayer[getSquareIndex([i, j])].classList.remove(
-				"hit",
-				"missed",
-			);
-			display.squaresComputer[getSquareIndex([i, j])].classList.remove(
-				"hit",
-				"missed",
-			);
-		}
-	}
-};
 const announceWinner = (playerName) => {
 	gameInfo.textContent = `${playerName} wins!`;
 };
@@ -94,7 +82,6 @@ display.wipeGameboards = wipeGameboards;
 display.renderShips = renderShips;
 display.renderSquareHit = renderSquareHit;
 display.renderSquareMiss = renderSquareMiss;
-display.resetHitAndMiss = resetHitAndMiss;
 display.getSquareIndex = getSquareIndex;
 display.announceWinner = announceWinner;
 display.announcePlayerTurn = announcePlayerTurn;

@@ -43,9 +43,9 @@ export function GameController() {
 	populateBoard(players[0]);
 	populateBoard(players[1]);
 	DisplayController.init();
+	DisplayController.wipeGameboards();
 	DisplayController.renderGameboards();
 	DisplayController.renderShips(players[0].gameboard);
-	DisplayController.resetHitAndMiss();
 	function playerRound(gameboard, coordsArr, square) {
 		processAttack(gameboard, coordsArr, square);
 		DisplayController.announceComputerTurn();
