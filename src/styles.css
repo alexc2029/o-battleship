@@ -128,4 +128,10 @@ body {
 	& .gameboard > div.hit {
 		background-color: red;
 	}
+	& .gameboard > div:not(.hit, .missed):hover {
+		background-color: #25282a;
+	}
+	& .gameboard > div:not(.hit, .missed):active {
+		background-color: #3c4246;
+	}
 }
