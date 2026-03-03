@@ -1,4 +1,4 @@
-import { DisplayController } from "./dom";
+import DisplayController from "./dom.js";
 
 //a bit of circular dependency going on
 

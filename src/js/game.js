@@ -1,4 +1,4 @@
-import { DisplayController } from "./dom.js";
+import DisplayController from "./dom.js";
 import { Player } from "./player.js";
 import { Computer } from "./computer.js";
 import { addAttackListeners } from "./events.js";
@@ -42,7 +42,8 @@ export function GameController() {
 
 	populateBoard(players[0]);
 	populateBoard(players[1]);
-	import("./dom.js");
+	DisplayController.init();
+	DisplayController.renderGameboards();
 	DisplayController.renderShips(players[0].gameboard);
 	DisplayController.resetHitAndMiss();
 	function playerRound(gameboard, coordsArr, square) {
