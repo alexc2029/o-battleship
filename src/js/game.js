@@ -24,6 +24,17 @@ export function areCoordsEmpty(coordsArr, gameboard, shipSize) {
 	return true;
 }
 
+export function getRandomPlacement(
+	gameboard,
+	shipSize,
+	validate = areCoordsEmpty, ///dependency injection for easier testing
+) {
+	let randomCoords;
+	do {
+		randomCoords = gameboard.getRandomCoords();
+	} while (!validate(randomCoords, gameboard, shipSize));
+	return randomCoords;
+}
 
 export function processAttack(gameboard, coordsArr, square) {
 	gameboard.receiveAttack(coordsArr);
