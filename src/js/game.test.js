@@ -1,15 +1,16 @@
-import { DisplayController } from "./dom";
-import { processAttack } from "./game";
-import { isGameOver } from "./game";
-import { handleGameOver } from "./game";
+import DisplayController from "./dom.js";
+import {
+	processAttack,
+	isGameOver,
+	handleGameOver,
+} from "./game";
+import { Gameboard } from "./gameboard";
 
 jest.mock("./dom", () => {
 	return {
-		DisplayController: {
-			renderSquareHit: jest.fn(),
-			renderSquareMiss: jest.fn(),
-			announceWinner: jest.fn(),
-		},
+		renderSquareHit: jest.fn(),
+		renderSquareMiss: jest.fn(),
+		announceWinner: jest.fn(),
 	};
 });
 
