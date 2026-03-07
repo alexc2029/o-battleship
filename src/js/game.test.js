@@ -3,6 +3,7 @@ import {
 	processAttack,
 	isGameOver,
 	handleGameOver,
+	areCoordsEmpty,
 } from "./game";
 import { Gameboard } from "./gameboard";
 
@@ -91,6 +92,25 @@ describe("game tests", () => {
 			mockPlayer2.lost.mockReturnValue(false);
 			expect(handleGameOver(mockPlayers)).toBe(mockPlayer2);
 			expect(DisplayController.announceWinner).toHaveBeenCalled();
+		});
+	});
+	describe("areCoordsEmpty tests", () => {
+		let gameboard;
+		let stubGameboardAt;
+		beforeEach(() => {
+			gameboard = new Gameboard();
+			stubGameboardAt = jest.spyOn(gameboard, "at");
+		});
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+		test("true for empty coords", () => {
+			stubGameboardAt.mockReturnValue(null);
+			expect(areCoordsEmpty([3, 3], gameboard, 3)).toBe(true);
+		});
+		test("false for collision", () => {
+			stubGameboardAt.mockReturnValueOnce(null).mockReturnValueOnce(true);
+			expect(areCoordsEmpty([3, 3], gameboard, 3)).toBe(false);
 		});
 	});
 });

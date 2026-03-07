@@ -16,6 +16,15 @@ function populateBoard(player) {
 	player.gameboard.place([10, 10], 1);
 }
 
+export function areCoordsEmpty(coordsArr, gameboard, shipSize) {
+	for (let i = 0; i < shipSize; i++) {
+		if (gameboard.at(coordsArr)) return false;
+		coordsArr[0]++;
+	}
+	return true;
+}
+
+
 export function processAttack(gameboard, coordsArr, square) {
 	gameboard.receiveAttack(coordsArr);
 	if (gameboard.at(coordsArr).isHit())
