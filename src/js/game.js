@@ -40,8 +40,11 @@ export function handleGameOver(players) {
 export function GameController() {
 	const players = [new Player(), new Computer()];
 
-	populateBoard(players[0]);
-	populateBoard(players[1]);
+	// populateBoard(players[0]);
+	// populateBoard(players[1]);
+	players[0].gameboard.randomizeGameboard();
+	players[1].gameboard.randomizeGameboard();
+
 	DisplayController.init();
 	DisplayController.wipeGameboards();
 	DisplayController.renderGameboards();
