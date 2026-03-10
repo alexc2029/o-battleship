@@ -85,4 +85,16 @@ export class Gameboard {
 		} while (!validate(randomCoords, shipSize));
 		return randomCoords;
 	}
+	randomizeGameboard() {
+		this.place(this.getRandomPlacement(4), 4);
+		this.place(this.getRandomPlacement(3), 3);
+		this.place(this.getRandomPlacement(3), 3);
+		this.place(this.getRandomPlacement(2), 2);
+		this.place(this.getRandomPlacement(2), 2);
+		this.place(this.getRandomPlacement(2), 2);
+		this.place(this.getRandomPlacement(1), 1);
+		this.place(this.getRandomPlacement(1), 1);
+		this.place(this.getRandomPlacement(1), 1);
+		this.place(this.getRandomPlacement(1), 1);
+	}
 }
