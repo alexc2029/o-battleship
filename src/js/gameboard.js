@@ -69,6 +69,7 @@ export class Gameboard {
 		return gameboardSquare.isHit() || gameboardSquare.isMissed();
 	}
 	areCoordsEmpty(coordsArr, shipSize) {
+		if (coordsArr[0] + shipSize > 11) return false;
 		for (let i = 0; i < shipSize; i++) {
 			if (this.at(coordsArr)) return false;
 			coordsArr[0]++;
