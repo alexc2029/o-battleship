@@ -68,4 +68,21 @@ export class Gameboard {
 		let gameboardSquare = this.at([coordsArr[0], coordsArr[1]]);
 		return gameboardSquare.isHit() || gameboardSquare.isMissed();
 	}
+	areCoordsEmpty(coordsArr, shipSize) {
+		for (let i = 0; i < shipSize; i++) {
+			if (this.at(coordsArr)) return false;
+			coordsArr[0]++;
+		}
+		return true;
+	}
+	getRandomPlacement(
+		shipSize,
+		validate = this.areCoordsEmpty, ///dependency injection for easier testing
+	) {
+		let randomCoords;
+		do {
+			randomCoords = this.getRandomCoords();
+		} while (!validate(randomCoords, shipSize));
+		return randomCoords;
+	}
 }

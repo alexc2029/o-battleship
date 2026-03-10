@@ -53,4 +53,53 @@ describe("gameboard tests", () => {
 		expect(gameboard.alreadyShot([5, 5])).toBeTruthy;
 		expect(gameboard.alreadyShot([4, 5])).toBeFalsy;
 	});
+	describe("areCoordsEmpty tests", () => {
+		let gameboard;
+		let stubGameboardAt;
+		beforeEach(() => {
+			gameboard = new Gameboard();
+			stubGameboardAt = jest.spyOn(gameboard, "at");
+		});
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+		test("true for empty coords", () => {
+			stubGameboardAt.mockReturnValue(null);
+			expect(gameboard.areCoordsEmpty([3, 3], 3)).toBe(true);
+		});
+		test("false for collision", () => {
+			stubGameboardAt.mockReturnValueOnce(null).mockReturnValueOnce(true);
+			expect(gameboard.areCoordsEmpty([3, 3], 3)).toBe(false);
+		});
+	});
+	describe("getRandomPlacement tests", () => {
+		let gameboard;
+		let stubRandomCoords, mockValidate;
+		beforeEach(() => {
+			gameboard = new Gameboard();
+			stubRandomCoords = jest.spyOn(gameboard, "getRandomCoords");
+			mockValidate = jest.fn();
+		});
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+		test("retries until ship can be placed without collisions", () => {
+			stubRandomCoords
+				.mockReturnValueOnce([3, 3])
+				.mockReturnValue([6, 7]);
+			mockValidate.mockReturnValueOnce(false).mockReturnValueOnce(true);
+			expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([
+				6, 7,
+			]);
+		});
+		test("doesn't retry for valid first coordinates", () => {
+			stubRandomCoords
+				.mockReturnValueOnce([3, 3])
+				.mockReturnValue([6, 7]);
+			mockValidate.mockReturnValueOnce(true).mockReturnValueOnce(true);
+			expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([
+				3, 3,
+			]);
+		});
+	});
 });

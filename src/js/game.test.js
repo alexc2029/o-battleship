@@ -1,12 +1,5 @@
 import DisplayController from "./dom.js";
-import {
-	processAttack,
-	isGameOver,
-	handleGameOver,
-	areCoordsEmpty,
-	getRandomPlacement,
-} from "./game";
-import { Gameboard } from "./gameboard";
+import { processAttack, isGameOver, handleGameOver } from "./game";
 
 jest.mock("./dom", () => {
 	return {
@@ -93,55 +86,6 @@ describe("game tests", () => {
 			mockPlayer2.lost.mockReturnValue(false);
 			expect(handleGameOver(mockPlayers)).toBe(mockPlayer2);
 			expect(DisplayController.announceWinner).toHaveBeenCalled();
-		});
-	});
-	describe("areCoordsEmpty tests", () => {
-		let gameboard;
-		let stubGameboardAt;
-		beforeEach(() => {
-			gameboard = new Gameboard();
-			stubGameboardAt = jest.spyOn(gameboard, "at");
-		});
-		afterEach(() => {
-			jest.restoreAllMocks();
-		});
-		test("true for empty coords", () => {
-			stubGameboardAt.mockReturnValue(null);
-			expect(areCoordsEmpty([3, 3], gameboard, 3)).toBe(true);
-		});
-		test("false for collision", () => {
-			stubGameboardAt.mockReturnValueOnce(null).mockReturnValueOnce(true);
-			expect(areCoordsEmpty([3, 3], gameboard, 3)).toBe(false);
-		});
-	});
-	describe("getRandomPlacement tests", () => {
-		let gameboard;
-		let stubRandomCoords, mockValidate;
-		beforeEach(() => {
-			gameboard = new Gameboard();
-			stubRandomCoords = jest.spyOn(gameboard, "getRandomCoords");
-			mockValidate = jest.fn();
-		});
-		afterEach(() => {
-			jest.restoreAllMocks();
-		});
-		test("retries until ship can be placed without collisions", () => {
-			stubRandomCoords
-				.mockReturnValueOnce([3, 3])
-				.mockReturnValue([6, 7]);
-			mockValidate.mockReturnValueOnce(false).mockReturnValueOnce(true);
-			expect(getRandomPlacement(gameboard, 3, mockValidate)).toEqual([
-				6, 7,
-			]);
-		});
-		test("doesn't retry for valid first coordinates", () => {
-			stubRandomCoords
-				.mockReturnValueOnce([3, 3])
-				.mockReturnValue([6, 7]);
-			mockValidate.mockReturnValueOnce(true).mockReturnValueOnce(true);
-			expect(getRandomPlacement(gameboard, 3, mockValidate)).toEqual([
-				3, 3,
-			]);
 		});
 	});
 });
