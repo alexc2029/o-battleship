@@ -70,9 +70,10 @@ export class Gameboard {
 	}
 	areCoordsEmpty(coordsArr, shipSize) {
 		if (coordsArr[0] + shipSize > 11) return false;
+		let coordsCopy = [...coordsArr]; //true copy of the array to modify safely
 		for (let i = 0; i < shipSize; i++) {
-			if (this.at(coordsArr)) return false;
-			coordsArr[0]++;
+			if (this.at(coordsCopy)?.ship) return false;
+			coordsCopy[0]++;
 		}
 		return true;
 	}
