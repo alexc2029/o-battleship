@@ -40,7 +40,7 @@ export class Gameboard {
 		)
 			throw new Error("Cannot place ship outside grid bounds");
 		for (let i = coordsArr[0]; i < coordsArr[0] + shipLength; i++) {
-			if (this.at([coordsArr[i], coordsArr[1]])?.ship)
+			if (this.at([i, coordsArr[1]])?.ship)
 				throw new Error("Cannot place over existing ship");
 		}
 		for (let i = coordsArr[0]; i < coordsArr[0] + shipLength; i++) {
