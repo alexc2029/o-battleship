@@ -134,4 +134,7 @@ body {
 	& .gameboard > div:not(.hit, .missed):active {
 		background-color: #3c4246;
 	}
+	& .randomize-button {
+		display: flex;
+	}
 }

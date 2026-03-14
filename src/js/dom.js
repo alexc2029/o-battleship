@@ -1,3 +1,5 @@
+import shuffleIcon from "../../icons/shuffle.svg";
+
 const display = {};
 let gameboardsContainer, gameInfo;
 const init = () => {
@@ -24,12 +26,16 @@ const renderGameboards = () => {
 	gameboard1Container.appendChild(gameboard1);
 	gameboard2Container.appendChild(gameboard2);
 	const label1 = document.createElement("div");
+	const randomizeButton = document.createElement("div");
+	randomizeButton.classList.add("randomize-button");
+	randomizeButton.innerHTML = `Randomize <img src='${shuffleIcon}' />`;
 	label1.textContent = "Your board";
 	label1.classList.add("board-label");
 	const label2 = document.createElement("div");
 	label2.textContent = "Opponent's board";
 	label2.classList.add("board-label");
 	gameboard1Container.appendChild(label1);
+	gameboard1Container.appendChild(randomizeButton);
 	gameboard2Container.appendChild(label2);
 	gameboardsContainer.appendChild(gameboard1Container);
 	gameboardsContainer.appendChild(gameboard2Container);
