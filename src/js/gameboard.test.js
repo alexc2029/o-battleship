@@ -55,20 +55,24 @@ describe("gameboard tests", () => {
 	});
 	describe("areCoordsEmpty tests", () => {
 		let gameboard;
-		let stubGameboardAt;
+		let stubGameboardAt, mockEmptySquare, mockOccupiedSquare;
 		beforeEach(() => {
 			gameboard = new Gameboard();
 			stubGameboardAt = jest.spyOn(gameboard, "at");
+			mockEmptySquare = { ship: null };
+			mockOccupiedSquare = { ship: true };
 		});
 		afterEach(() => {
 			jest.restoreAllMocks();
 		});
 		test("true for empty coords", () => {
-			stubGameboardAt.mockReturnValue(null);
+			stubGameboardAt.mockReturnValue(mockEmptySquare);
 			expect(gameboard.areCoordsEmpty([3, 3], 3)).toBe(true);
 		});
 		test("false for collision", () => {
-			stubGameboardAt.mockReturnValueOnce(null).mockReturnValueOnce(true);
+			stubGameboardAt
+				.mockReturnValueOnce(mockOccupiedSquare)
+				.mockReturnValueOnce(mockEmptySquare);
 			expect(gameboard.areCoordsEmpty([3, 3], 3)).toBe(false);
 		});
 	});
