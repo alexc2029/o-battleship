@@ -84,7 +84,7 @@ export class Gameboard {
 		let randomCoords;
 		do {
 			randomCoords = this.getRandomCoords();
-		} while (!validate(randomCoords, shipSize));
+		} while (!validate.call(this, randomCoords, shipSize)); //add missing this binding
 		return randomCoords;
 	}
 	randomizeGameboard() {
