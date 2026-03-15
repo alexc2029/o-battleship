@@ -90,6 +90,9 @@ const switchToPlayButton = () => {
 	display.playButton.textContent = "Play";
 	display.playButton.classList.toggle("reset");
 };
+const announceWaitingForGameStart = () => {
+	gameInfo.textContent = "Waiting for game start.";
+};
 
 display.init = init;
 display.renderGameboards = renderGameboards;
@@ -103,5 +106,6 @@ display.announcePlayerTurn = announcePlayerTurn;
 display.announceComputerTurn = announceComputerTurn;
 display.switchToResetButton = switchToResetButton;
 display.switchToPlayButton = switchToPlayButton;
+display.announceWaitingForGameStart = announceWaitingForGameStart;
 
 export default display;
