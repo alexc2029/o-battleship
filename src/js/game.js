@@ -1,7 +1,7 @@
 import DisplayController from "./dom.js";
 import { Player } from "./player.js";
 import { Computer } from "./computer.js";
-import { addAttackListeners } from "./events.js";
+import { addAttackListeners, setGameReset } from "./events.js";
 
 function populateBoard(player) {
 	player.gameboard.place([1, 1], 4);
@@ -73,6 +73,7 @@ export function GameController(players) {
 	DisplayController.playButton.addEventListener(
 		"click",
 		function resetHandler(e) {
+			setGameReset();
 			DisplayController.playButton.removeEventListener(
 				"click",
 				resetHandler,
