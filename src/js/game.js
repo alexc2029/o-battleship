@@ -59,16 +59,28 @@ export function initGame() {
 	}
 	DisplayController.randomizeButton.addEventListener("click", handleClick);
 	DisplayController.playButton.addEventListener("click", function handler(e) {
-		GameController(players);
 		DisplayController.randomizeButton.removeEventListener(
 			"click",
 			handleClick,
 		);
 		DisplayController.playButton.removeEventListener("click", handler);
+		GameController(players);
 	});
 }
 
 export function GameController(players) {
+	DisplayController.switchToResetButton();
+	DisplayController.playButton.addEventListener(
+		"click",
+		function resetHandler(e) {
+			DisplayController.playButton.removeEventListener(
+				"click",
+				resetHandler,
+			);
+			DisplayController.switchToPlayButton();
+			initGame();
+		},
+	);
 	function playerRound(gameboard, coordsArr, square) {
 		processAttack(gameboard, coordsArr, square);
 		DisplayController.announceComputerTurn();
