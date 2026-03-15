@@ -37,18 +37,37 @@ export function handleGameOver(players) {
 	return winner;
 }
 
-export function GameController() {
+function handleRandomize() {
 	const players = [new Player(), new Computer()];
 
-	// populateBoard(players[0]);
-	// populateBoard(players[1]);
 	players[0].gameboard.randomizeGameboard();
 	players[1].gameboard.randomizeGameboard();
 
-	DisplayController.init();
 	DisplayController.wipeGameboards();
 	DisplayController.renderGameboards();
 	DisplayController.renderShips(players[0].gameboard);
+
+	return players;
+}
+
+export function initGame() {
+	DisplayController.init();
+	let players = handleRandomize();
+	function handleClick() {
+		players = handleRandomize();
+	}
+	DisplayController.randomizeButton.addEventListener("click", handleClick);
+	DisplayController.playButton.addEventListener("click", function handler(e) {
+		GameController(players);
+		DisplayController.randomizeButton.removeEventListener(
+			"click",
+			handleClick,
+		);
+		DisplayController.playButton.removeEventListener("click", handler);
+	});
+}
+
+export function GameController(players) {
 	function playerRound(gameboard, coordsArr, square) {
 		processAttack(gameboard, coordsArr, square);
 		DisplayController.announceComputerTurn();

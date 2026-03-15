@@ -1,12 +1,14 @@
 import shuffleIcon from "../../icons/shuffle.svg";
 
 const display = {};
-let gameboardsContainer, gameInfo, randomizeButton, playButton;
+let gameboardsContainer, gameInfo;
 const init = () => {
 	gameboardsContainer = document.querySelector(".gameboards-container");
 	gameInfo = document.querySelector(".game-status");
-	randomizeButton = document.querySelector(".randomize-button");
-	playButton = document.querySelector(".play-button");
+	display.playButton = document.querySelector(".play-button");
+	display.randomizeButton = document.createElement("div");
+	display.randomizeButton.classList.add("randomize-button");
+	display.randomizeButton.innerHTML = `Randomize <img src='${shuffleIcon}' />`;
 };
 const renderGameboards = () => {
 	const gameboard1Container = document.createElement("div");
@@ -28,16 +30,13 @@ const renderGameboards = () => {
 	gameboard1Container.appendChild(gameboard1);
 	gameboard2Container.appendChild(gameboard2);
 	const label1 = document.createElement("div");
-	const randomizeButton = document.createElement("div");
-	randomizeButton.classList.add("randomize-button");
-	randomizeButton.innerHTML = `Randomize <img src='${shuffleIcon}' />`;
 	label1.textContent = "Your board";
 	label1.classList.add("board-label");
 	const label2 = document.createElement("div");
 	label2.textContent = "Opponent's board";
 	label2.classList.add("board-label");
 	gameboard1Container.appendChild(label1);
-	gameboard1Container.appendChild(randomizeButton);
+	gameboard1Container.appendChild(display.randomizeButton);
 	gameboard2Container.appendChild(label2);
 	gameboardsContainer.appendChild(gameboard1Container);
 	gameboardsContainer.appendChild(gameboard2Container);
@@ -94,7 +93,5 @@ display.getSquareIndex = getSquareIndex;
 display.announceWinner = announceWinner;
 display.announcePlayerTurn = announcePlayerTurn;
 display.announceComputerTurn = announceComputerTurn;
-display.randomizeButton = randomizeButton;
-display.playButton = playButton;
 
 export default display;
