@@ -1,10 +1,12 @@
 import shuffleIcon from "../../icons/shuffle.svg";
 
 const display = {};
-let gameboardsContainer, gameInfo;
+let gameboardsContainer, gameInfo, randomizeButton, playButton;
 const init = () => {
 	gameboardsContainer = document.querySelector(".gameboards-container");
 	gameInfo = document.querySelector(".game-status");
+	randomizeButton = document.querySelector(".randomize-button");
+	playButton = document.querySelector(".play-button");
 };
 const renderGameboards = () => {
 	const gameboard1Container = document.createElement("div");
@@ -92,5 +94,7 @@ display.getSquareIndex = getSquareIndex;
 display.announceWinner = announceWinner;
 display.announcePlayerTurn = announcePlayerTurn;
 display.announceComputerTurn = announceComputerTurn;
+display.randomizeButton = randomizeButton;
+display.playButton = playButton;
 
 export default display;

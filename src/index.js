@@ -3,14 +3,13 @@ import { GameController } from "./js/game";
 import { setGameReset } from "./js/events";
 import DisplayController from "./js/dom.js";
 
-const playButton = document.querySelector(".play-button");
 let firstPress = true;
 DisplayController.init();
 DisplayController.renderGameboards();
-playButton.addEventListener("click", () => {
+DisplayController.playButton.addEventListener("click", () => {
 	if (firstPress) {
 		firstPress = false;
-		playButton.textContent = "Restart";
+		DisplayController.playButton.textContent = "Restart";
 	}
 	GameController();
 	setGameReset();
