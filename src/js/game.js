@@ -52,6 +52,7 @@ function handleRandomize() {
 
 export function initGame() {
 	DisplayController.init();
+	DisplayController.announceWaitingForGameStart();
 	let players = handleRandomize();
 	function handleClick() {
 		players = handleRandomize();
