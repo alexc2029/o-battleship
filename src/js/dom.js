@@ -82,6 +82,14 @@ const announcePlayerTurn = (playerName) => {
 const announceComputerTurn = () => {
 	gameInfo.textContent = `Computer's turn.`;
 };
+const switchToResetButton = () => {
+	display.playButton.textContent = "Reset";
+	display.playButton.classList.toggle("reset");
+};
+const switchToPlayButton = () => {
+	display.playButton.textContent = "Play";
+	display.playButton.classList.toggle("reset");
+};
 
 display.init = init;
 display.renderGameboards = renderGameboards;
@@ -93,5 +101,7 @@ display.getSquareIndex = getSquareIndex;
 display.announceWinner = announceWinner;
 display.announcePlayerTurn = announcePlayerTurn;
 display.announceComputerTurn = announceComputerTurn;
+display.switchToResetButton = switchToResetButton;
+display.switchToPlayButton = switchToPlayButton;
 
 export default display;

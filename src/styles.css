@@ -97,6 +97,9 @@ body {
 			transform: translateY(1px);
 			background-color: rgb(9, 130, 9);
 		}
+		& > .play-button.reset {
+			background-color: darkred;
+		}
 	}
 }
 
