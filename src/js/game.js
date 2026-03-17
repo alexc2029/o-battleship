@@ -70,6 +70,7 @@ export function initGame() {
 
 export function GameController(players) {
 	DisplayController.switchToResetButton();
+	DisplayController.toggleRandomizeVisibility();
 	DisplayController.playButton.addEventListener(
 		"click",
 		function resetHandler(e) {

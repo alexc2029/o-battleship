@@ -93,6 +93,12 @@ const switchToPlayButton = () => {
 const announceWaitingForGameStart = () => {
 	gameInfo.textContent = "Waiting for game start.";
 };
+const toggleRandomizeVisibility = () => {
+	const visibility = display.randomizeButton.style.visibility;
+	if (visibility == "hidden")
+		display.randomizeButton.style.visibility = "visible";
+	else display.randomizeButton.style.visibility = "hidden";
+};
 
 display.init = init;
 display.renderGameboards = renderGameboards;
@@ -107,5 +113,6 @@ display.announceComputerTurn = announceComputerTurn;
 display.switchToResetButton = switchToResetButton;
 display.switchToPlayButton = switchToPlayButton;
 display.announceWaitingForGameStart = announceWaitingForGameStart;
+display.toggleRandomizeVisibility = toggleRandomizeVisibility;
 
 export default display;
