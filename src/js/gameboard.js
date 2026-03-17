@@ -68,7 +68,7 @@ export class Gameboard {
 		let gameboardSquare = this.at([coordsArr[0], coordsArr[1]]);
 		return gameboardSquare.isHit() || gameboardSquare.isMissed();
 	}
-	areCoordsEmpty(coordsArr, shipSize) {
+	areCoordsValid(coordsArr, shipSize) {
 		if (coordsArr[0] + shipSize > 11) return false;
 		let coordsCopy = [...coordsArr]; //true copy of the array to modify safely
 		for (let i = 0; i < shipSize; i++) {
@@ -79,7 +79,7 @@ export class Gameboard {
 	}
 	getRandomPlacement(
 		shipSize,
-		validate = this.areCoordsEmpty, ///dependency injection for easier testing
+		validate = this.areCoordsValid, ///dependency injection for easier testing
 	) {
 		let randomCoords;
 		do {

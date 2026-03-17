@@ -53,7 +53,7 @@ describe("gameboard tests", () => {
 		expect(gameboard.alreadyShot([5, 5])).toBeTruthy;
 		expect(gameboard.alreadyShot([4, 5])).toBeFalsy;
 	});
-	describe("areCoordsEmpty tests", () => {
+	describe("areCoordsValid tests", () => {
 		let gameboard;
 		let stubGameboardAt, mockEmptySquare, mockOccupiedSquare;
 		beforeEach(() => {
@@ -67,13 +67,13 @@ describe("gameboard tests", () => {
 		});
 		test("true for empty coords", () => {
 			stubGameboardAt.mockReturnValue(mockEmptySquare);
-			expect(gameboard.areCoordsEmpty([3, 3], 3)).toBe(true);
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(true);
 		});
 		test("false for collision", () => {
 			stubGameboardAt
 				.mockReturnValueOnce(mockOccupiedSquare)
 				.mockReturnValueOnce(mockEmptySquare);
-			expect(gameboard.areCoordsEmpty([3, 3], 3)).toBe(false);
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
 	});
 	describe("getRandomPlacement tests", () => {
