@@ -75,6 +75,19 @@ describe("gameboard tests", () => {
 				.mockReturnValueOnce(mockEmptySquare);
 			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
+		test("false for neighbor to the immediate left", () => {
+			stubGameboardAt
+				.mockReturnValueOnce(mockEmptySquare)
+				.mockReturnValueOnce(mockOccupiedSquare);
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+		});
+		test("false for neighbor to the immediate right", () => {
+			stubGameboardAt
+				.mockReturnValueOnce(mockEmptySquare)
+				.mockReturnValueOnce(mockEmptySquare)
+				.mockReturnValueOnce(mockOccupiedSquare);
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+		});
 	});
 	describe("getRandomPlacement tests", () => {
 		let gameboard;

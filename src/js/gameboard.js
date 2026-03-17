@@ -75,6 +75,8 @@ export class Gameboard {
 			if (this.at(coordsCopy)?.ship) return false;
 			coordsCopy[0]++;
 		}
+		if (this.at([coordsArr[0] - 1, coordsArr[1]])?.ship) return false;
+		if (this.at(coordsCopy)?.ship) return false;
 		return true;
 	}
 	getRandomPlacement(
