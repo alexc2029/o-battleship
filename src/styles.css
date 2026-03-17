@@ -139,5 +139,13 @@ body {
 	}
 	& .randomize-button {
 		display: flex;
+		border: none;
+		background-color: inherit;
+		padding: 10px;
+		cursor: pointer;
+		border-radius: 15px;
+	}
+	& .randomize-button:hover {
+		background-color: rgb(40, 39, 39);
 	}
 }
