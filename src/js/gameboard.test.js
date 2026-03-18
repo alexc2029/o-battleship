@@ -70,22 +70,24 @@ describe("gameboard tests", () => {
 			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(true);
 		});
 		test("false for collision", () => {
-			stubGameboardAt
-				.mockReturnValueOnce(mockOccupiedSquare)
-				.mockReturnValueOnce(mockEmptySquare);
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 3)
+					return mockOccupiedSquare;
+			});
 			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
 		test("false for neighbor to the immediate left", () => {
-			stubGameboardAt
-				.mockReturnValueOnce(mockEmptySquare)
-				.mockReturnValueOnce(mockOccupiedSquare);
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 3)
+					return mockOccupiedSquare;
+			});
 			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
 		});
 		test("false for neighbor to the immediate right", () => {
-			stubGameboardAt
-				.mockReturnValueOnce(mockEmptySquare)
-				.mockReturnValueOnce(mockEmptySquare)
-				.mockReturnValueOnce(mockOccupiedSquare);
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 3)
+					return mockOccupiedSquare;
+			});
 			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
 		});
 	});
