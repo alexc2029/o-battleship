@@ -90,6 +90,13 @@ describe("gameboard tests", () => {
 			});
 			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
 		});
+		test("false for neighbor immediately below", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+		});
 	});
 	describe("getRandomPlacement tests", () => {
 		let gameboard;
