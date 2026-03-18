@@ -75,7 +75,9 @@ export class Gameboard {
 			if (this.at(coordsCopy)?.ship) return false;
 			coordsCopy[0]++;
 		}
+		//left neighbor
 		if (this.at([coordsArr[0] - 1, coordsArr[1]])?.ship) return false;
+		//right neighbor
 		if (this.at(coordsCopy)?.ship) return false;
 		return true;
 	}
