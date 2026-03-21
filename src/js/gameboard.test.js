@@ -104,6 +104,34 @@ describe("gameboard tests", () => {
 			});
 			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
+		test("false for left-top diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+		});
+		test("false for left-bottom diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+		});
+		test("false for right-top diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+		});
+		test("false for right-bottom diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+		});
 	});
 	describe("getRandomPlacement tests", () => {
 		let gameboard;

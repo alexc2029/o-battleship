@@ -81,8 +81,9 @@ export class Gameboard {
 		if (this.at(coordsCopy)?.ship) return false;
 		//below neighbor
 		coordsCopy = [...coordsArr];
-		coordsCopy[1]++;
-		for (let i = 0; i < shipSize; i++) {
+		coordsCopy[0]--; //start from left
+		coordsCopy[1]++; //set to below
+		for (let i = 0; i <= shipSize + 1; i++) {
 			if (this.at(coordsCopy)?.ship) return false; //below
 			if (this.at([coordsCopy[0], coordsCopy[1] - 2])?.ship) return false; //above
 			coordsCopy[0]++;
