@@ -7,8 +7,8 @@ describe("gameboard tests", () => {
 		gameboard.place([5, 5], 5);
 	});
 	test("empty squares are empty", () => {
-		expect(gameboard.at([4, 5]).ship).toBeNull();
-		expect(gameboard.at([10, 5]).ship).toBeNull();
+		expect(gameboard.at([6, 6]).ship).toBeNull();
+		expect(gameboard.at([1, 1]).ship).toBeNull();
 	});
 	test("ship is placed correctly", () => {
 		for (let i = 5; i <= 9; i++) {
