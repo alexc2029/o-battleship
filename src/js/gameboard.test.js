@@ -186,4 +186,18 @@ describe("gameboard vertical tests", () => {
 		expect(gameboard.at([5, 4]).ship).toBeNull();
 		expect(gameboard.at([5, 10]).ship).toBeNull();
 	});
+	test("throws errors for vertical out of bounds conditions", () => {
+		expect(() => {
+			gameboard.place([7, 10], 2, true);
+		}).toThrow();
+		expect(() => {
+			gameboard.place([7, -1], 3, true);
+		}).toThrow();
+		expect(() => {
+			gameboard.place([-1, 7], 3, true);
+		}).toThrow();
+		expect(() => {
+			gameboard.place([11, 7], 3, true);
+		}).toThrow();
+	});
 });
