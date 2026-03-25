@@ -29,7 +29,7 @@ export class Gameboard {
 			Array.from({ length: 11 }, () => new Square(null)),
 		);
 	}
-	place(coordsArr, shipLength) {
+	place(coordsArr, shipLength, isVertical = false) {
 		let ship = new Ship(shipLength);
 		this.#ships.push(ship);
 		if (
@@ -39,12 +39,22 @@ export class Gameboard {
 			coordsArr[1] > 11
 		)
 			throw new Error("Cannot place ship outside grid bounds");
-		for (let i = coordsArr[0]; i < coordsArr[0] + shipLength; i++) {
-			if (this.at([i, coordsArr[1]])?.ship)
-				throw new Error("Cannot place over existing ship");
-		}
-		for (let i = coordsArr[0]; i < coordsArr[0] + shipLength; i++) {
-			this.#board[i][coordsArr[1]] = new Square(ship);
+		if (!isVertical) {
+			for (let i = coordsArr[0]; i < coordsArr[0] + shipLength; i++) {
+				if (this.at([i, coordsArr[1]])?.ship)
+					throw new Error("Cannot place over existing ship");
+			}
+			for (let i = coordsArr[0]; i < coordsArr[0] + shipLength; i++) {
+				this.#board[i][coordsArr[1]] = new Square(ship);
+			}
+		} else {
+			for (let i = coordsArr[1]; i < coordsArr[1] + shipLength; i++) {
+				if (this.at([coordsArr[0], i])?.ship)
+					throw new Error("Cannot place over existing ship");
+			}
+			for (let i = coordsArr[1]; i < coordsArr[1] + shipLength; i++) {
+				this.#board[coordsArr[0]][i] = new Square(ship);
+			}
 		}
 	}
 	at(coordsArr) {

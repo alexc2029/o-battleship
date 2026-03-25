@@ -156,3 +156,20 @@ describe("getRandomPlacement tests", () => {
 		expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([3, 3]);
 	});
 });
+
+describe("gameboard vertical tests", () => {
+	let gameboard;
+	beforeEach(() => {
+		gameboard = new Gameboard();
+		gameboard.place([5, 5], 5, true);
+	});
+	test("ship is placed correctly", () => {
+		for (let i = 5; i <= 9; i++) {
+			expect(gameboard.at([5, i]).ship).not.toBeNull();
+		}
+	});
+	test("squares at ship extremities stay empty", () => {
+		expect(gameboard.at([5, 4]).ship).toBeNull();
+		expect(gameboard.at([5, 10]).ship).toBeNull();
+	});
+});
