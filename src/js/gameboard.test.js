@@ -53,114 +53,106 @@ describe("gameboard tests", () => {
 		expect(gameboard.alreadyShot([5, 5])).toBeTruthy();
 		expect(gameboard.alreadyShot([4, 5])).toBeFalsy();
 	});
-	describe("areCoordsValid tests", () => {
-		let gameboard;
-		let stubGameboardAt, mockEmptySquare, mockOccupiedSquare;
-		beforeEach(() => {
-			gameboard = new Gameboard();
-			stubGameboardAt = jest.spyOn(gameboard, "at");
-			mockEmptySquare = { ship: null };
-			mockOccupiedSquare = { ship: true };
-		});
-		afterEach(() => {
-			jest.restoreAllMocks();
-		});
-		test("true for empty coords", () => {
-			stubGameboardAt.mockReturnValue(mockEmptySquare);
-			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(true);
-		});
-		test("false for collision", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 4 && coordsArr[1] == 3)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-		});
-		test("false for neighbor to the immediate left", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 2 && coordsArr[1] == 3)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
-		});
-		test("false for neighbor to the immediate right", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 4 && coordsArr[1] == 3)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
-		});
-		test("false for neighbor immediately below", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 4 && coordsArr[1] == 4)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-		});
-		test("false for neighbor immediately above", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 4 && coordsArr[1] == 2)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-		});
-		test("false for left-top diagonal neighbor", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 2 && coordsArr[1] == 2)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-		});
-		test("false for left-bottom diagonal neighbor", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 2 && coordsArr[1] == 4)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-		});
-		test("false for right-top diagonal neighbor", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 4 && coordsArr[1] == 2)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
-		});
-		test("false for right-bottom diagonal neighbor", () => {
-			stubGameboardAt.mockImplementation((coordsArr) => {
-				if (coordsArr[0] == 4 && coordsArr[1] == 4)
-					return mockOccupiedSquare;
-			});
-			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
-		});
+});
+describe("areCoordsValid tests", () => {
+	let gameboard;
+	let stubGameboardAt, mockEmptySquare, mockOccupiedSquare;
+	beforeEach(() => {
+		gameboard = new Gameboard();
+		stubGameboardAt = jest.spyOn(gameboard, "at");
+		mockEmptySquare = { ship: null };
+		mockOccupiedSquare = { ship: true };
 	});
-	describe("getRandomPlacement tests", () => {
-		let gameboard;
-		let stubRandomCoords, mockValidate;
-		beforeEach(() => {
-			gameboard = new Gameboard();
-			stubRandomCoords = jest.spyOn(gameboard, "getRandomCoords");
-			mockValidate = jest.fn();
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+	test("true for empty coords", () => {
+		stubGameboardAt.mockReturnValue(mockEmptySquare);
+		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(true);
+	});
+	test("false for collision", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 4 && coordsArr[1] == 3)
+				return mockOccupiedSquare;
 		});
-		afterEach(() => {
-			jest.restoreAllMocks();
+		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+	});
+	test("false for neighbor to the immediate left", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 2 && coordsArr[1] == 3)
+				return mockOccupiedSquare;
 		});
-		test("retries until ship can be placed without collisions", () => {
-			stubRandomCoords
-				.mockReturnValueOnce([3, 3])
-				.mockReturnValue([6, 7]);
-			mockValidate.mockReturnValueOnce(false).mockReturnValueOnce(true);
-			expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([
-				6, 7,
-			]);
+		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+	});
+	test("false for neighbor to the immediate right", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 4 && coordsArr[1] == 3)
+				return mockOccupiedSquare;
 		});
-		test("doesn't retry for valid first coordinates", () => {
-			stubRandomCoords
-				.mockReturnValueOnce([3, 3])
-				.mockReturnValue([6, 7]);
-			mockValidate.mockReturnValueOnce(true).mockReturnValueOnce(true);
-			expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([
-				3, 3,
-			]);
+		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+	});
+	test("false for neighbor immediately below", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 4 && coordsArr[1] == 4)
+				return mockOccupiedSquare;
 		});
+		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+	});
+	test("false for neighbor immediately above", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 4 && coordsArr[1] == 2)
+				return mockOccupiedSquare;
+		});
+		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+	});
+	test("false for left-top diagonal neighbor", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 2 && coordsArr[1] == 2)
+				return mockOccupiedSquare;
+		});
+		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+	});
+	test("false for left-bottom diagonal neighbor", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 2 && coordsArr[1] == 4)
+				return mockOccupiedSquare;
+		});
+		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
+	});
+	test("false for right-top diagonal neighbor", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 4 && coordsArr[1] == 2)
+				return mockOccupiedSquare;
+		});
+		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+	});
+	test("false for right-bottom diagonal neighbor", () => {
+		stubGameboardAt.mockImplementation((coordsArr) => {
+			if (coordsArr[0] == 4 && coordsArr[1] == 4)
+				return mockOccupiedSquare;
+		});
+		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+	});
+});
+describe("getRandomPlacement tests", () => {
+	let gameboard;
+	let stubRandomCoords, mockValidate;
+	beforeEach(() => {
+		gameboard = new Gameboard();
+		stubRandomCoords = jest.spyOn(gameboard, "getRandomCoords");
+		mockValidate = jest.fn();
+	});
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+	test("retries until ship can be placed without collisions", () => {
+		stubRandomCoords.mockReturnValueOnce([3, 3]).mockReturnValue([6, 7]);
+		mockValidate.mockReturnValueOnce(false).mockReturnValueOnce(true);
+		expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([6, 7]);
+	});
+	test("doesn't retry for valid first coordinates", () => {
+		stubRandomCoords.mockReturnValueOnce([3, 3]).mockReturnValue([6, 7]);
+		mockValidate.mockReturnValueOnce(true).mockReturnValueOnce(true);
+		expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([3, 3]);
 	});
 });
