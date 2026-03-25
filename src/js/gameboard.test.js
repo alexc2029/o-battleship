@@ -53,6 +53,20 @@ describe("gameboard tests", () => {
 		expect(gameboard.alreadyShot([5, 5])).toBeTruthy();
 		expect(gameboard.alreadyShot([4, 5])).toBeFalsy();
 	});
+	test("throws errors for horizontal out of bounds conditions", () => {
+		expect(() => {
+			gameboard.place([10, 7], 2);
+		}).toThrow();
+		expect(() => {
+			gameboard.place([-1, 7], 3);
+		}).toThrow();
+		expect(() => {
+			gameboard.place([7, -1], 3);
+		}).toThrow();
+		expect(() => {
+			gameboard.place([7, 11], 3);
+		}).toThrow();
+	});
 });
 describe("areCoordsValid tests", () => {
 	let gameboard;
