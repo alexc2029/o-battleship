@@ -128,22 +128,37 @@ export class Gameboard {
 		shipSize,
 		validate = this.areCoordsValid, ///dependency injection for easier testing
 	) {
-		let randomCoords;
+		let randomCoords,
+			randomOrientation = this.getRandomOrientation();
+		console.log(randomOrientation);
 		do {
 			randomCoords = this.getRandomCoords();
-		} while (!validate.call(this, randomCoords, shipSize)); //add missing this binding
-		return randomCoords;
+		} while (
+			!validate.call(this, randomCoords, shipSize, randomOrientation)
+		); //add missing this binding
+		return { coords: randomCoords, orientation: randomOrientation };
 	}
 	randomizeGameboard() {
-		this.place(this.getRandomPlacement(4), 4);
-		this.place(this.getRandomPlacement(3), 3);
-		this.place(this.getRandomPlacement(3), 3);
-		this.place(this.getRandomPlacement(2), 2);
-		this.place(this.getRandomPlacement(2), 2);
-		this.place(this.getRandomPlacement(2), 2);
-		this.place(this.getRandomPlacement(1), 1);
-		this.place(this.getRandomPlacement(1), 1);
-		this.place(this.getRandomPlacement(1), 1);
-		this.place(this.getRandomPlacement(1), 1);
+		let randomPlacement;
+		randomPlacement = this.getRandomPlacement(4);
+		this.place(randomPlacement.coords, 4, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(3);
+		this.place(randomPlacement.coords, 3, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(3);
+		this.place(randomPlacement.coords, 3, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(2);
+		this.place(randomPlacement.coords, 2, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(2);
+		this.place(randomPlacement.coords, 2, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(2);
+		this.place(randomPlacement.coords, 2, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(1);
+		this.place(randomPlacement.coords, 1, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(1);
+		this.place(randomPlacement.coords, 1, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(1);
+		this.place(randomPlacement.coords, 1, randomPlacement.orientation);
+		randomPlacement = this.getRandomPlacement(1);
+		this.place(randomPlacement.coords, 1, randomPlacement.orientation);
 	}
 }
