@@ -92,6 +92,10 @@ describe("areCoordsValid tests", () => {
 			});
 			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
+		test("false for ship too long", () => {
+			stubGameboardAt.mockReturnValue(mockEmptySquare);
+			expect(gameboard.areCoordsValid([8, 3], 4)).toBe(false);
+		});
 		test("false for neighbor to the immediate left", () => {
 			stubGameboardAt.mockImplementation((coordsArr) => {
 				if (coordsArr[0] == 2 && coordsArr[1] == 3)
@@ -160,6 +164,10 @@ describe("areCoordsValid tests", () => {
 					return mockOccupiedSquare;
 			});
 			expect(gameboard.areCoordsValid([3, 3], 3, true)).toBe(false);
+		});
+		test("false for ship too long", () => {
+			stubGameboardAt.mockReturnValue(mockEmptySquare);
+			expect(gameboard.areCoordsValid([3, 8], 4, true)).toBe(false);
 		});
 		test("false for neighbor immediately above", () => {
 			stubGameboardAt.mockImplementation((coordsArr) => {

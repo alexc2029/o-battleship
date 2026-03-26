@@ -111,6 +111,7 @@ export class Gameboard {
 				coordsCopy[0]++;
 			}
 		} else {
+			if (coordsArr[1] + shipSize > 11) return false;
 			for (
 				let i = coordsCopy[1] - 1;
 				i <= coordsCopy[1] + shipSize;
