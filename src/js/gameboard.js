@@ -81,6 +81,9 @@ export class Gameboard {
 		let y = Math.floor(Math.random() * 10 + 1);
 		return [x, y];
 	}
+	getRandomOrientation() {
+		return Math.random() >= 0.5;
+	}
 	alreadyShot(coordsArr) {
 		let gameboardSquare = this.at([coordsArr[0], coordsArr[1]]);
 		return gameboardSquare.isHit() || gameboardSquare.isMissed();
