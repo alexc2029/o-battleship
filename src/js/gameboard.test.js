@@ -80,72 +80,143 @@ describe("areCoordsValid tests", () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 	});
-	test("true for empty coords", () => {
-		stubGameboardAt.mockReturnValue(mockEmptySquare);
-		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(true);
-	});
-	test("false for collision", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 4 && coordsArr[1] == 3)
-				return mockOccupiedSquare;
+	describe("horizontal", () => {
+		test("true for empty coords", () => {
+			stubGameboardAt.mockReturnValue(mockEmptySquare);
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(true);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-	});
-	test("false for neighbor to the immediate left", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 2 && coordsArr[1] == 3)
-				return mockOccupiedSquare;
+		test("false for collision", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 3)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
-	});
-	test("false for neighbor to the immediate right", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 4 && coordsArr[1] == 3)
-				return mockOccupiedSquare;
+		test("false for neighbor to the immediate left", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 3)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
-	});
-	test("false for neighbor immediately below", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 4 && coordsArr[1] == 4)
-				return mockOccupiedSquare;
+		test("false for neighbor to the immediate right", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 3)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-	});
-	test("false for neighbor immediately above", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 4 && coordsArr[1] == 2)
-				return mockOccupiedSquare;
+		test("false for neighbor immediately below", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-	});
-	test("false for left-top diagonal neighbor", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 2 && coordsArr[1] == 2)
-				return mockOccupiedSquare;
+		test("false for neighbor immediately above", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-	});
-	test("false for left-bottom diagonal neighbor", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 2 && coordsArr[1] == 4)
-				return mockOccupiedSquare;
+		test("false for left-top diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
-	});
-	test("false for right-top diagonal neighbor", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 4 && coordsArr[1] == 2)
-				return mockOccupiedSquare;
+		test("false for left-bottom diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
-	});
-	test("false for right-bottom diagonal neighbor", () => {
-		stubGameboardAt.mockImplementation((coordsArr) => {
-			if (coordsArr[0] == 4 && coordsArr[1] == 4)
-				return mockOccupiedSquare;
+		test("false for right-top diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
 		});
-		expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+		test("false for right-bottom diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 1)).toBe(false);
+		});
+	});
+	describe("vertical", () => {
+		test("true for empty coords", () => {
+			stubGameboardAt.mockReturnValue(mockEmptySquare);
+			expect(gameboard.areCoordsValid([3, 3], 3, true)).toBe(true);
+		});
+		test("false for collision", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 3 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3, true)).toBe(false);
+		});
+		test("false for neighbor immediately above", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 3 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3, true)).toBe(false);
+		});
+		test("false for neighbor immediately below", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 3 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 1, true)).toBe(false);
+		});
+		test("false for neighbor to the immediate left", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 2, true)).toBe(false);
+		});
+		test("false for neighbor to the immediate right", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 4)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 2, true)).toBe(false);
+		});
+		test("false for left-top diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 3, true)).toBe(false);
+		});
+		test("false for left-bottom diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 2 && coordsArr[1] == 5)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 2, true)).toBe(false);
+		});
+		test("false for right-top diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 2)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 2, true)).toBe(false);
+		});
+		test("false for right-bottom diagonal neighbor", () => {
+			stubGameboardAt.mockImplementation((coordsArr) => {
+				if (coordsArr[0] == 4 && coordsArr[1] == 5)
+					return mockOccupiedSquare;
+			});
+			expect(gameboard.areCoordsValid([3, 3], 2, true)).toBe(false);
+		});
 	});
 });
 describe("getRandomPlacement tests", () => {

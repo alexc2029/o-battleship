@@ -85,25 +85,38 @@ export class Gameboard {
 		let gameboardSquare = this.at([coordsArr[0], coordsArr[1]]);
 		return gameboardSquare.isHit() || gameboardSquare.isMissed();
 	}
-	areCoordsValid(coordsArr, shipSize) {
-		if (coordsArr[0] + shipSize > 11) return false;
+	areCoordsValid(coordsArr, shipSize, isVertical = false) {
 		let coordsCopy = [...coordsArr]; //true copy of the array to modify safely
-		for (let i = 0; i < shipSize; i++) {
+		if (!isVertical) {
+			if (coordsArr[0] + shipSize > 11) return false;
+			for (let i = 0; i < shipSize; i++) {
+				if (this.at(coordsCopy)?.ship) return false;
+				coordsCopy[0]++;
+			}
+			//left neighbor
+			if (this.at([coordsArr[0] - 1, coordsArr[1]])?.ship) return false;
+			//right neighbor
 			if (this.at(coordsCopy)?.ship) return false;
-			coordsCopy[0]++;
-		}
-		//left neighbor
-		if (this.at([coordsArr[0] - 1, coordsArr[1]])?.ship) return false;
-		//right neighbor
-		if (this.at(coordsCopy)?.ship) return false;
-		//below neighbor
-		coordsCopy = [...coordsArr];
-		coordsCopy[0]--; //start from left
-		coordsCopy[1]++; //set to below
-		for (let i = 0; i <= shipSize + 1; i++) {
-			if (this.at(coordsCopy)?.ship) return false; //below
-			if (this.at([coordsCopy[0], coordsCopy[1] - 2])?.ship) return false; //above
-			coordsCopy[0]++;
+			//below neighbor
+			coordsCopy = [...coordsArr];
+			coordsCopy[0]--; //start from left
+			coordsCopy[1]++; //set to below
+			for (let i = 0; i <= shipSize + 1; i++) {
+				if (this.at(coordsCopy)?.ship) return false; //below
+				if (this.at([coordsCopy[0], coordsCopy[1] - 2])?.ship)
+					return false; //above
+				coordsCopy[0]++;
+			}
+		} else {
+			for (
+				let i = coordsCopy[1] - 1;
+				i <= coordsCopy[1] + shipSize;
+				i++
+			) {
+				if (this.at([coordsCopy[0], i])?.ship) return false; ///check collisions and top+bottom neighbors
+				if (this.at([coordsCopy[0] - 1, i])?.ship) return false;
+				if (this.at([coordsCopy[0] + 1, i])?.ship) return false;
+			}
 		}
 		return true;
 	}
