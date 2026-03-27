@@ -12,4 +12,7 @@ export class Computer extends Player {
 		} while (isShot);
 		return randomCoords;
 	}
+	attack(playerGameboard) {
+		return this.decideRandomAttack(playerGameboard);
+	}
 }
