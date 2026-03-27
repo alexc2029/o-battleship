@@ -130,7 +130,6 @@ export class Gameboard {
 	) {
 		let randomCoords,
 			randomOrientation = this.getRandomOrientation();
-		console.log(randomOrientation);
 		do {
 			randomCoords = this.getRandomCoords();
 		} while (
