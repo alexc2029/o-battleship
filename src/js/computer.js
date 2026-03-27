@@ -12,7 +12,7 @@ export class Computer extends Player {
 		} while (isShot);
 		return randomCoords;
 	}
-	attack(playerGameboard) {
-		return this.decideRandomAttack(playerGameboard);
+	attack(playerGameboard, randomAttack = this.decideRandomAttack) {
+		return randomAttack.call(this, playerGameboard);
 	}
 }
