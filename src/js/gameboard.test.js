@@ -241,12 +241,16 @@ describe("getRandomPlacement tests", () => {
 	test("retries until ship can be placed without collisions", () => {
 		stubRandomCoords.mockReturnValueOnce([3, 3]).mockReturnValue([6, 7]);
 		mockValidate.mockReturnValueOnce(false).mockReturnValueOnce(true);
-		expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([6, 7]);
+		expect(gameboard.getRandomPlacement(3, mockValidate).coords).toEqual([
+			6, 7,
+		]);
 	});
 	test("doesn't retry for valid first coordinates", () => {
 		stubRandomCoords.mockReturnValueOnce([3, 3]).mockReturnValue([6, 7]);
 		mockValidate.mockReturnValueOnce(true).mockReturnValueOnce(true);
-		expect(gameboard.getRandomPlacement(3, mockValidate)).toEqual([3, 3]);
+		expect(gameboard.getRandomPlacement(3, mockValidate).coords).toEqual([
+			3, 3,
+		]);
 	});
 });
 
