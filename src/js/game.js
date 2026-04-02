@@ -88,7 +88,9 @@ export function GameController(players) {
 		DisplayController.announceComputerTurn();
 	}
 	function computerRound() {
-		const computerAttackCoords = players[1].attack(players[0].gameboard);
+		const computerAttackCoords = players[1].decideAttack(
+			players[0].gameboard,
+		);
 		processAttack(
 			players[0].gameboard,
 			computerAttackCoords,
