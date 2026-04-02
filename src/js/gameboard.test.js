@@ -1,4 +1,5 @@
 import { Gameboard } from "./gameboard";
+import { coordsWithinBounds } from "./gameboard";
 
 describe("gameboard tests", () => {
 	let gameboard;
@@ -282,5 +283,17 @@ describe("gameboard vertical tests", () => {
 		expect(() => {
 			gameboard.place([11, 7], 3, true);
 		}).toThrow();
+	});
+});
+
+describe("coordsWithinBounds tests", () => {
+	test("returns false for out of bounds coordinates", () => {
+		expect(coordsWithinBounds([-1, 3])).toBe(false);
+		expect(coordsWithinBounds([3, -1])).toBe(false);
+		expect(coordsWithinBounds([11, 3])).toBe(false);
+		expect(coordsWithinBounds([3, 11])).toBe(false);
+	});
+	test("returns true for coordinates within bounds", () => {
+		expect(coordsWithinBounds([3, 3])).toBe(true);
 	});
 });

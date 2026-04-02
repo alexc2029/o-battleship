@@ -21,6 +21,12 @@ class Square {
 	}
 }
 
+export function coordsWithinBounds(coordsArr) {
+	if (coordsArr[0] < 1 || coordsArr[1] < 1) return false;
+	if (coordsArr[0] > 10 || coordsArr[1] > 10) return false;
+	return true;
+}
+
 export class Gameboard {
 	#board;
 	#ships = [];
