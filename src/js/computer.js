@@ -1,8 +1,10 @@
 import { Player } from "./player";
+import { coordsWithinBounds } from "./gameboard";
 
 export class Computer extends Player {
 	constructor() {
 		super("Computer");
+		this.attackQueue = [];
 	}
 	decideRandomAttack(playerGameboard) {
 		let isShot, randomCoords;
@@ -13,6 +15,38 @@ export class Computer extends Player {
 		return randomCoords;
 	}
 	decideAttack(playerGameboard, randomAttack = this.decideRandomAttack) {
-		return randomAttack.call(this, playerGameboard);
+		if (this.attackQueue.length == 0) {
+			const randomAttackCoords = randomAttack.call(this, playerGameboard);
+			let adjacentCoords = [];
+			if (playerGameboard.at(randomAttackCoords)?.ship) {
+				adjacentCoords.push([
+					randomAttackCoords[0] - 1,
+					randomAttackCoords[1],
+				]);
+
+				adjacentCoords.push([
+					randomAttackCoords[0] + 1,
+					randomAttackCoords[1],
+				]);
+
+				adjacentCoords.push([
+					randomAttackCoords[0],
+					randomAttackCoords[1] - 1,
+				]);
+
+				adjacentCoords.push([
+					randomAttackCoords[0],
+					randomAttackCoords[1] + 1,
+				]);
+				for (let coords of adjacentCoords) {
+					if (coordsWithinBounds(coords))
+						this.attackQueue.push(coords);
+				}
+			}
+			return randomAttackCoords;
+		} else {
+			const attackCoords = this.attackQueue.shift();
+			return attackCoords;
+		}
 	}
 }
