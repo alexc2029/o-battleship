@@ -34,8 +34,8 @@ export class Gameboard {
 		if (!isVertical) {
 			if (
 				coordsArr[0] + shipLength > 11 ||
-				coordsArr[0] < 0 ||
-				coordsArr[1] < 0 ||
+				coordsArr[0] < 1 ||
+				coordsArr[1] < 1 ||
 				coordsArr[1] >= 11
 			)
 				throw new Error("Cannot place ship outside grid bounds");
@@ -49,8 +49,8 @@ export class Gameboard {
 		} else {
 			if (
 				coordsArr[1] + shipLength > 11 ||
-				coordsArr[0] < 0 ||
-				coordsArr[1] < 0 ||
+				coordsArr[0] < 1 ||
+				coordsArr[1] < 1 ||
 				coordsArr[0] >= 11
 			)
 				throw new Error("Cannot place ship outside grid bounds");
