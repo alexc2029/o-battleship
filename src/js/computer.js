@@ -2,9 +2,10 @@ import { Player } from "./player";
 import { coordsWithinBounds } from "./gameboard";
 
 export class Computer extends Player {
+	#attackQueue;
 	constructor() {
 		super("Computer");
-		this.attackQueue = [];
+		this.#attackQueue = [];
 	}
 	decideRandomAttack(playerGameboard) {
 		let isShot, randomCoords;
@@ -15,10 +16,10 @@ export class Computer extends Player {
 		return randomCoords;
 	}
 	decideAttack(playerGameboard, randomAttack = this.decideRandomAttack) {
-		if (this.attackQueue.length == 0) {
+		if (this.#attackQueue.length == 0) {
 			const randomAttackCoords = randomAttack.call(this, playerGameboard);
 			let adjacentCoords = [];
-			if (playerGameboard.at(randomAttackCoords)?.ship) {
+			if (hasShip(playerGameboard, randomAttackCoords)) {
 				adjacentCoords.push([
 					randomAttackCoords[0] - 1,
 					randomAttackCoords[1],
@@ -40,12 +41,12 @@ export class Computer extends Player {
 				]);
 				for (let coords of adjacentCoords) {
 					if (coordsWithinBounds(coords))
-						this.attackQueue.push(coords);
+						this.#attackQueue.push(coords);
 				}
 			}
 			return randomAttackCoords;
 		} else {
-			const attackCoords = this.attackQueue.shift();
+			const attackCoords = this.#attackQueue.shift();
 			return attackCoords;
 		}
 	}
@@ -54,4 +55,8 @@ export class Computer extends Player {
 export function isShipVertical(initialCoordsArr, coordsArr) {
 	if (initialCoordsArr[0] != coordsArr[0]) return false;
 	else return true;
+}
+
+function hasShip(gameboard, coordsArr) {
+	return gameboard.at(coordsArr)?.ship;
 }
