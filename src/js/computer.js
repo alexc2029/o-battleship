@@ -50,3 +50,8 @@ export class Computer extends Player {
 		}
 	}
 }
+
+export function isShipVertical(initialCoordsArr, coordsArr) {
+	if (initialCoordsArr[0] != coordsArr[0]) return false;
+	else return true;
+}
