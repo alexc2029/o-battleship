@@ -36,6 +36,19 @@ describe("Computer tests", () => {
 			expect(attacks).toContainEqual([4, 3]);
 			expect(attacks).toContainEqual([5, 3]);
 		});
+		test("eventually attacks all squares for the middle of a 4 length ship", () => {
+			playerGameboard.place([3, 3], 4);
+			stubRandomAttack.mockReturnValue([4, 3]);
+			const attacks = [];
+			for (let i = 0; i <= 8; i++) {
+				attacks.push(
+					computer.decideAttack(playerGameboard, stubRandomAttack),
+				);
+			}
+			expect(attacks).toContainEqual([4, 3]);
+			expect(attacks).toContainEqual([5, 3]);
+			expect(attacks).toContainEqual([6, 3]);
+		});
 	});
 	describe("isShipVertical tests", () => {
 		test("false for horizontal", () => {
