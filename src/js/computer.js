@@ -3,6 +3,9 @@ import { coordsWithinBounds } from "./gameboard";
 
 export class Computer extends Player {
 	#attackQueue;
+	#randomAttackCoords = null;
+	#prevAdjAttackCoords = null;
+	#isEnemyShipVertical = null;
 	constructor() {
 		super("Computer");
 		this.#attackQueue = [];
@@ -17,36 +20,109 @@ export class Computer extends Player {
 	}
 	decideAttack(playerGameboard, randomAttack = this.decideRandomAttack) {
 		if (this.#attackQueue.length == 0) {
-			const randomAttackCoords = randomAttack.call(this, playerGameboard);
+			this.#prevAdjAttackCoords = null;
+			this.#isEnemyShipVertical = null;
+			this.#randomAttackCoords = randomAttack.call(this, playerGameboard);
 			let adjacentCoords = [];
-			if (hasShip(playerGameboard, randomAttackCoords)) {
+			if (hasShip(playerGameboard, this.#randomAttackCoords)) {
 				adjacentCoords.push([
-					randomAttackCoords[0] - 1,
-					randomAttackCoords[1],
+					this.#randomAttackCoords[0] - 1,
+					this.#randomAttackCoords[1],
 				]);
 
 				adjacentCoords.push([
-					randomAttackCoords[0] + 1,
-					randomAttackCoords[1],
+					this.#randomAttackCoords[0] + 1,
+					this.#randomAttackCoords[1],
 				]);
 
 				adjacentCoords.push([
-					randomAttackCoords[0],
-					randomAttackCoords[1] - 1,
+					this.#randomAttackCoords[0],
+					this.#randomAttackCoords[1] - 1,
 				]);
 
 				adjacentCoords.push([
-					randomAttackCoords[0],
-					randomAttackCoords[1] + 1,
+					this.#randomAttackCoords[0],
+					this.#randomAttackCoords[1] + 1,
 				]);
 				for (let coords of adjacentCoords) {
 					if (coordsWithinBounds(coords))
 						this.#attackQueue.push(coords);
 				}
 			}
-			return randomAttackCoords;
+			return this.#randomAttackCoords;
 		} else {
+			if (
+				this.#isEnemyShipVertical == null &&
+				this.#prevAdjAttackCoords != null &&
+				hasShip(playerGameboard, this.#prevAdjAttackCoords)
+			) {
+				this.#isEnemyShipVertical = isShipVertical(
+					this.#randomAttackCoords,
+					this.#prevAdjAttackCoords,
+				);
+				if (this.#isEnemyShipVertical) {
+					if (
+						this.#prevAdjAttackCoords[1] <
+						this.#randomAttackCoords[1]
+					)
+						this.#attackQueue = [
+							[
+								this.#randomAttackCoords[0],
+								this.#prevAdjAttackCoords[1] - 1,
+							],
+
+							[
+								this.#randomAttackCoords[0],
+								this.#prevAdjAttackCoords[1] + 2,
+							],
+						];
+					else
+						this.#attackQueue = [
+							[
+								this.#randomAttackCoords[0],
+								this.#prevAdjAttackCoords[1] + 1,
+							],
+
+							[
+								this.#randomAttackCoords[0],
+								this.#prevAdjAttackCoords[1] - 2,
+							],
+						];
+				} else {
+					if (
+						this.#prevAdjAttackCoords[0] <
+						this.#randomAttackCoords[0]
+					)
+						this.#attackQueue = [
+							[
+								this.#prevAdjAttackCoords[0] - 1,
+								this.#randomAttackCoords[1],
+							],
+
+							[
+								this.#prevAdjAttackCoords[0] + 2,
+								this.#randomAttackCoords[1],
+							],
+						];
+					else
+						this.#attackQueue = [
+							[
+								this.#prevAdjAttackCoords[0] + 1,
+								this.#randomAttackCoords[1],
+							],
+							[
+								this.#prevAdjAttackCoords[0] - 1,
+								this.#randomAttackCoords[1],
+							],
+							[
+								this.#prevAdjAttackCoords[0] - 2,
+								this.#randomAttackCoords[1],
+							],
+						];
+				}
+			}
 			const attackCoords = this.#attackQueue.shift();
+			this.#prevAdjAttackCoords = attackCoords;
 			return attackCoords;
 		}
 	}
