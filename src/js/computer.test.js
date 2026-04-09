@@ -19,12 +19,12 @@ describe("Computer tests", () => {
 				stubRandomAttack.mockReturnValue([3, 3]);
 				const attacks = [];
 				for (let i = 0; i <= 4; i++) {
-					attacks.push(
-						computer.decideAttack(
-							playerGameboard,
-							stubRandomAttack,
-						),
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
 					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
 				}
 				expect(attacks).toContainEqual([4, 3]);
 			});
@@ -33,12 +33,12 @@ describe("Computer tests", () => {
 				stubRandomAttack.mockReturnValue([4, 3]);
 				const attacks = [];
 				for (let i = 0; i <= 4; i++) {
-					attacks.push(
-						computer.decideAttack(
-							playerGameboard,
-							stubRandomAttack,
-						),
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
 					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
 				}
 				expect(attacks).toContainEqual([4, 3]);
 				expect(attacks).toContainEqual([5, 3]);
@@ -48,12 +48,12 @@ describe("Computer tests", () => {
 				stubRandomAttack.mockReturnValue([4, 3]);
 				const attacks = [];
 				for (let i = 0; i <= 8; i++) {
-					attacks.push(
-						computer.decideAttack(
-							playerGameboard,
-							stubRandomAttack,
-						),
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
 					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
 				}
 				expect(attacks).toContainEqual([4, 3]);
 				expect(attacks).toContainEqual([5, 3]);
