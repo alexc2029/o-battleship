@@ -40,7 +40,7 @@ describe("Computer tests", () => {
 					playerGameboard.receiveAttack(coords);
 					attacks.push(coords);
 				}
-				expect(attacks).toContainEqual([4, 3]);
+				expect(attacks).toContainEqual([3, 3]);
 				expect(attacks).toContainEqual([5, 3]);
 			});
 			test("eventually attacks all squares for the middle of a 4 length ship", () => {
@@ -55,7 +55,7 @@ describe("Computer tests", () => {
 					playerGameboard.receiveAttack(coords);
 					attacks.push(coords);
 				}
-				expect(attacks).toContainEqual([4, 3]);
+				expect(attacks).toContainEqual([3, 3]);
 				expect(attacks).toContainEqual([5, 3]);
 				expect(attacks).toContainEqual([6, 3]);
 			});
