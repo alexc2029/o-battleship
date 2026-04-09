@@ -32,70 +32,59 @@ export class Computer extends Player {
 					this.#prevAdjAttackCoords,
 				);
 				if (this.#isEnemyShipVertical) {
-					if (
-						this.#prevAdjAttackCoords[1] <
-						this.#randomAttackCoords[1]
-					)
-						this.#attackQueue = [
-							[
-								this.#randomAttackCoords[0],
-								this.#prevAdjAttackCoords[1] - 1,
-							],
+					this.#attackQueue = [
+						[
+							this.#randomAttackCoords[0],
+							this.#randomAttackCoords[1] - 2,
+						],
+						[
+							this.#randomAttackCoords[0],
+							this.#randomAttackCoords[1] - 1,
+						],
+						[
+							this.#randomAttackCoords[0],
+							this.#randomAttackCoords[1] + 1,
+						],
 
-							[
-								this.#randomAttackCoords[0],
-								this.#prevAdjAttackCoords[1] + 2,
-							],
-						];
-					else
-						this.#attackQueue = [
-							[
-								this.#randomAttackCoords[0],
-								this.#prevAdjAttackCoords[1] + 1,
-							],
-
-							[
-								this.#randomAttackCoords[0],
-								this.#prevAdjAttackCoords[1] - 2,
-							],
-						];
+						[
+							this.#randomAttackCoords[0],
+							this.#randomAttackCoords[1] + 2,
+						],
+					];
 				} else {
-					if (
-						this.#prevAdjAttackCoords[0] <
-						this.#randomAttackCoords[0]
-					)
-						this.#attackQueue = [
-							[
-								this.#prevAdjAttackCoords[0] - 1,
-								this.#randomAttackCoords[1],
-							],
+					this.#attackQueue = [
+						[
+							this.#randomAttackCoords[0] - 2,
+							this.#randomAttackCoords[1],
+						],
+						[
+							this.#randomAttackCoords[0] - 1,
+							this.#randomAttackCoords[1],
+						],
 
-							[
-								this.#prevAdjAttackCoords[0] + 2,
-								this.#randomAttackCoords[1],
-							],
-						];
-					else
-						this.#attackQueue = [
-							[
-								this.#prevAdjAttackCoords[0] + 1,
-								this.#randomAttackCoords[1],
-							],
-							[
-								this.#prevAdjAttackCoords[0] - 1,
-								this.#randomAttackCoords[1],
-							],
-							[
-								this.#prevAdjAttackCoords[0] - 2,
-								this.#randomAttackCoords[1],
-							],
-						];
+						[
+							this.#randomAttackCoords[0] + 1,
+							this.#randomAttackCoords[1],
+						],
+						[
+							this.#randomAttackCoords[0] + 2,
+							this.#randomAttackCoords[1],
+						],
+					];
 				}
 			}
-			const attackCoords = this.#attackQueue.shift();
-			this.#prevAdjAttackCoords = attackCoords;
-			return attackCoords;
-			
+			this.#attackQueue = this.#attackQueue.filter((coords) => {
+				const isInside = coordsWithinBounds(coords);
+				const notShot = !playerGameboard.alreadyShot(coords);
+				return isInside && notShot;
+			});
+
+			if (this.#attackQueue.length > 0) {
+				const attackCoords = this.#attackQueue.shift();
+				this.#prevAdjAttackCoords = attackCoords;
+				return attackCoords;
+			} else
+				return this.#handleRandomAttack(randomAttack, playerGameboard);
 		}
 	}
 
