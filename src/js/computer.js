@@ -20,36 +20,7 @@ export class Computer extends Player {
 	}
 	decideAttack(playerGameboard, randomAttack = this.decideRandomAttack) {
 		if (this.#attackQueue.length == 0) {
-			this.#prevAdjAttackCoords = null;
-			this.#isEnemyShipVertical = null;
-			this.#randomAttackCoords = randomAttack.call(this, playerGameboard);
-			let adjacentCoords = [];
-			if (hasShip(playerGameboard, this.#randomAttackCoords)) {
-				adjacentCoords.push([
-					this.#randomAttackCoords[0] - 1,
-					this.#randomAttackCoords[1],
-				]);
-
-				adjacentCoords.push([
-					this.#randomAttackCoords[0] + 1,
-					this.#randomAttackCoords[1],
-				]);
-
-				adjacentCoords.push([
-					this.#randomAttackCoords[0],
-					this.#randomAttackCoords[1] - 1,
-				]);
-
-				adjacentCoords.push([
-					this.#randomAttackCoords[0],
-					this.#randomAttackCoords[1] + 1,
-				]);
-				for (let coords of adjacentCoords) {
-					if (coordsWithinBounds(coords))
-						this.#attackQueue.push(coords);
-				}
-			}
-			return this.#randomAttackCoords;
+			return this.#handleRandomAttack(randomAttack, playerGameboard);
 		} else {
 			if (
 				this.#isEnemyShipVertical == null &&
@@ -124,7 +95,44 @@ export class Computer extends Player {
 			const attackCoords = this.#attackQueue.shift();
 			this.#prevAdjAttackCoords = attackCoords;
 			return attackCoords;
+			
 		}
+	}
+
+	#handleRandomAttack(randomAttack, playerGameboard) {
+		this.#prevAdjAttackCoords = null;
+		this.#isEnemyShipVertical = null;
+		this.#randomAttackCoords = randomAttack.call(this, playerGameboard);
+		let adjacentCoords = [];
+		if (hasShip(playerGameboard, this.#randomAttackCoords)) {
+			adjacentCoords.push([
+				this.#randomAttackCoords[0] - 1,
+				this.#randomAttackCoords[1],
+			]);
+
+			adjacentCoords.push([
+				this.#randomAttackCoords[0] + 1,
+				this.#randomAttackCoords[1],
+			]);
+
+			adjacentCoords.push([
+				this.#randomAttackCoords[0],
+				this.#randomAttackCoords[1] - 1,
+			]);
+
+			adjacentCoords.push([
+				this.#randomAttackCoords[0],
+				this.#randomAttackCoords[1] + 1,
+			]);
+			for (let coords of adjacentCoords) {
+				if (
+					coordsWithinBounds(coords) &&
+					!playerGameboard.alreadyShot(coords)
+				)
+					this.#attackQueue.push(coords);
+			}
+		}
+		return this.#randomAttackCoords;
 	}
 }
 
