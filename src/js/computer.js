@@ -73,11 +73,7 @@ export class Computer extends Player {
 					];
 				}
 			}
-			this.#attackQueue = this.#attackQueue.filter((coords) => {
-				const isInside = coordsWithinBounds(coords);
-				const notShot = !playerGameboard.alreadyShot(coords);
-				return isInside && notShot;
-			});
+			this.#filterAttackQueue(playerGameboard);
 
 			if (this.#attackQueue.length > 0) {
 				const attackCoords = this.#attackQueue.shift();
@@ -92,36 +88,37 @@ export class Computer extends Player {
 		this.#prevAdjAttackCoords = null;
 		this.#isEnemyShipVertical = null;
 		this.#randomAttackCoords = randomAttack.call(this, playerGameboard);
-		let adjacentCoords = [];
 		if (hasShip(playerGameboard, this.#randomAttackCoords)) {
-			adjacentCoords.push([
+			this.#attackQueue.push([
 				this.#randomAttackCoords[0] - 1,
 				this.#randomAttackCoords[1],
 			]);
 
-			adjacentCoords.push([
+			this.#attackQueue.push([
 				this.#randomAttackCoords[0] + 1,
 				this.#randomAttackCoords[1],
 			]);
 
-			adjacentCoords.push([
+			this.#attackQueue.push([
 				this.#randomAttackCoords[0],
 				this.#randomAttackCoords[1] - 1,
 			]);
 
-			adjacentCoords.push([
+			this.#attackQueue.push([
 				this.#randomAttackCoords[0],
 				this.#randomAttackCoords[1] + 1,
 			]);
-			for (let coords of adjacentCoords) {
-				if (
-					coordsWithinBounds(coords) &&
-					!playerGameboard.alreadyShot(coords)
-				)
-					this.#attackQueue.push(coords);
-			}
+			this.#filterAttackQueue(playerGameboard);
 		}
 		return this.#randomAttackCoords;
+	}
+
+	#filterAttackQueue(playerGameboard) {
+		this.#attackQueue = this.#attackQueue.filter((coords) => {
+			const isInside = coordsWithinBounds(coords);
+			const notShot = !playerGameboard.alreadyShot(coords);
+			return isInside && notShot;
+		});
 	}
 }
 
