@@ -59,6 +59,37 @@ describe("Computer tests", () => {
 				expect(attacks).toContainEqual([5, 3]);
 				expect(attacks).toContainEqual([6, 3]);
 			});
+			test("eventually attacks all squares for the extremity of a 3 length ship", () => {
+				playerGameboard.place([3, 3], 3);
+				stubRandomAttack.mockReturnValue([3, 3]);
+				const attacks = [];
+				for (let i = 0; i <= 4; i++) {
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
+					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
+				}
+				expect(attacks).toContainEqual([4, 3]);
+				expect(attacks).toContainEqual([5, 3]);
+			});
+			test("eventually attacks all squares for the extremity of a 4 length ship", () => {
+				playerGameboard.place([3, 3], 4);
+				stubRandomAttack.mockReturnValue([3, 3]);
+				const attacks = [];
+				for (let i = 0; i <= 8; i++) {
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
+					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
+				}
+				expect(attacks).toContainEqual([4, 3]);
+				expect(attacks).toContainEqual([5, 3]);
+				expect(attacks).toContainEqual([6, 3]);
+			});
 		});
 	});
 	describe("isShipVertical tests", () => {
