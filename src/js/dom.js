@@ -22,7 +22,9 @@ const renderGameboards = () => {
 	for (let i = 1; i <= 10; i++) {
 		for (let j = 1; j <= 10; j++) {
 			const square1 = document.createElement("div");
+			square1.classList.add("player-square");
 			const square2 = document.createElement("div");
+			square2.classList.add("computer-square");
 			gameboard1.appendChild(square1);
 			gameboard2.appendChild(square2);
 		}
