@@ -131,11 +131,11 @@ body {
 	& .gameboard > div.hit {
 		background-color: red;
 	}
-	& .gameboard > div.computer-square:not(.hit, .missed):hover {
+	& .gameboard:not(.opacity) > div.computer-square:not(.hit, .missed):hover {
 		background-color: #25282a;
 		cursor: pointer;
 	}
-	& .gameboard > div.computer-square:not(.hit, .missed):active {
+	& .gameboard:not(.opacity) > div.computer-square:not(.hit, .missed):active {
 		background-color: #3c4246;
 	}
 	& .randomize-button {
