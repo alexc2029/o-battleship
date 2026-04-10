@@ -1,4 +1,4 @@
-import shuffleIcon from "../../icons/shuffle.svg";
+import shuffleIcon from "../../assets/shuffle.svg";
 
 const display = {};
 let gameboardsContainer, gameInfo;
