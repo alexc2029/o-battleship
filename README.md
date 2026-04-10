@@ -34,3 +34,8 @@ A web-based Battleship game built with vanilla JavaScript to practice Test-Drive
 - Jest (Testing)
 - Webpack & Babel (Bundling and Transpiling)
 - HTML5 & CSS3
+
+## Future Improvements
+
+- **Drag-and-Drop Placement:** Implement a drag-and-drop interface allowing users to manually position and rotate their fleet on the gameboard prior to the start of a match, providing an alternative to the randomized placement.
+- **Computer Ship Size Tracking:** Further enhance the intelligence of the Computer by keeping track of what length ships are already destroyed (e.g if the 4-length ship is already destroyed, stop at 3 hits on the next ships)
