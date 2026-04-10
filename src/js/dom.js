@@ -18,7 +18,7 @@ const renderGameboards = () => {
 	const gameboard1 = document.createElement("div");
 	gameboard1.classList.add("gameboard");
 	const gameboard2 = document.createElement("div");
-	gameboard2.classList.add("gameboard");
+	gameboard2.classList.add("gameboard", "opacity");
 	for (let i = 1; i <= 10; i++) {
 		for (let j = 1; j <= 10; j++) {
 			const square1 = document.createElement("div");
@@ -43,6 +43,12 @@ const renderGameboards = () => {
 	gameboardsContainer.appendChild(gameboard1Container);
 	gameboardsContainer.appendChild(gameboard2Container);
 	initPostRenderGameboards();
+};
+const toggleGameboardOpacities = () => {
+	const gameboards = document.querySelectorAll(".gameboard");
+	for (const gameboard of gameboards) {
+		gameboard.classList.toggle("opacity");
+	}
 };
 const wipeGameboards = () => {
 	gameboardsContainer.innerHTML = "";
@@ -116,5 +122,6 @@ display.switchToResetButton = switchToResetButton;
 display.switchToPlayButton = switchToPlayButton;
 display.announceWaitingForGameStart = announceWaitingForGameStart;
 display.toggleRandomizeVisibility = toggleRandomizeVisibility;
+display.toggleGameboardOpacities = toggleGameboardOpacities;
 
 export default display;

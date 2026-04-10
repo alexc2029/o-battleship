@@ -150,3 +150,7 @@ body {
 		background-color: rgb(40, 39, 39);
 	}
 }
+
+.opacity {
+	opacity: 0.4;
+}

@@ -71,6 +71,7 @@ export function initGame() {
 export function GameController(players) {
 	DisplayController.switchToResetButton();
 	DisplayController.toggleRandomizeVisibility();
+	DisplayController.toggleGameboardOpacities();
 	DisplayController.playButton.addEventListener(
 		"click",
 		function resetHandler(e) {
@@ -86,6 +87,7 @@ export function GameController(players) {
 	function playerRound(gameboard, coordsArr, square) {
 		processAttack(gameboard, coordsArr, square);
 		DisplayController.announceComputerTurn();
+		DisplayController.toggleGameboardOpacities();
 	}
 	function computerRound() {
 		const computerAttackCoords = players[1].decideAttack(
@@ -99,6 +101,7 @@ export function GameController(players) {
 			],
 		);
 		DisplayController.announcePlayerTurn(players[0].name);
+		DisplayController.toggleGameboardOpacities();
 	}
 	DisplayController.announcePlayerTurn(players[0].name);
 	addAttackListeners(
