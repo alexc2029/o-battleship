@@ -91,6 +91,84 @@ describe("Computer tests", () => {
 				expect(attacks).toContainEqual([6, 3]);
 			});
 		});
+		describe("vertical", () => {
+			test("eventually attacks second square for a 2 length ship", () => {
+				playerGameboard.place([3, 3], 2, true);
+				stubRandomAttack.mockReturnValue([3, 3]);
+				const attacks = [];
+				for (let i = 0; i <= 4; i++) {
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
+					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
+				}
+				expect(attacks).toContainEqual([3, 4]);
+			});
+			test("eventually attacks all squares for the middle of a 3 length ship", () => {
+				playerGameboard.place([3, 3], 3, true);
+				stubRandomAttack.mockReturnValue([3, 4]);
+				const attacks = [];
+				for (let i = 0; i <= 5; i++) {
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
+					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
+				}
+				expect(attacks).toContainEqual([3, 3]);
+				expect(attacks).toContainEqual([3, 5]);
+			});
+			test("eventually attacks all squares for the middle of a 4 length ship", () => {
+				playerGameboard.place([3, 3], 4, true);
+				stubRandomAttack.mockReturnValue([3, 4]);
+				const attacks = [];
+				for (let i = 0; i <= 8; i++) {
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
+					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
+				}
+				expect(attacks).toContainEqual([3, 3]);
+				expect(attacks).toContainEqual([3, 5]);
+				expect(attacks).toContainEqual([3, 6]);
+			});
+			test("eventually attacks all squares for the extremity of a 3 length ship", () => {
+				playerGameboard.place([3, 3], 3, true);
+				stubRandomAttack.mockReturnValue([3, 3]);
+				const attacks = [];
+				for (let i = 0; i <= 5; i++) {
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
+					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
+				}
+				expect(attacks).toContainEqual([3, 4]);
+				expect(attacks).toContainEqual([3, 5]);
+			});
+			test("eventually attacks all squares for the extremity of a 4 length ship", () => {
+				playerGameboard.place([3, 3], 4, true);
+				stubRandomAttack.mockReturnValue([3, 3]);
+				const attacks = [];
+				for (let i = 0; i <= 8; i++) {
+					const coords = computer.decideAttack(
+						playerGameboard,
+						stubRandomAttack,
+					);
+					playerGameboard.receiveAttack(coords);
+					attacks.push(coords);
+				}
+				expect(attacks).toContainEqual([3, 4]);
+				expect(attacks).toContainEqual([3, 5]);
+				expect(attacks).toContainEqual([3, 6]);
+			});
+		});
 	});
 	describe("isShipVertical tests", () => {
 		test("false for horizontal", () => {

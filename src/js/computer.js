@@ -6,6 +6,8 @@ export class Computer extends Player {
 	#randomAttackCoords = null;
 	#prevAdjAttackCoords = null;
 	#isEnemyShipVertical = null;
+	#attackDirection = null;
+	#attemptsOver = false;
 	constructor() {
 		super("Computer");
 		this.#attackQueue = [];
@@ -19,7 +21,7 @@ export class Computer extends Player {
 		return randomCoords;
 	}
 	decideAttack(playerGameboard, randomAttack = this.decideRandomAttack) {
-		if (this.#attackQueue.length == 0) {
+		if (this.#attackQueue.length == 0 && this.#attemptsOver == true) {
 			return this.#handleRandomAttack(randomAttack, playerGameboard);
 		} else {
 			if (
@@ -31,51 +33,53 @@ export class Computer extends Player {
 					this.#randomAttackCoords,
 					this.#prevAdjAttackCoords,
 				);
+				this.#determineAttackDirection();
+			}
+			if (this.#isEnemyShipVertical != null) {
 				if (this.#isEnemyShipVertical) {
-					this.#attackQueue = [
-						[
-							this.#randomAttackCoords[0],
-							this.#randomAttackCoords[1] - 2,
-						],
-						[
-							this.#randomAttackCoords[0],
-							this.#randomAttackCoords[1] - 1,
-						],
-						[
-							this.#randomAttackCoords[0],
-							this.#randomAttackCoords[1] + 1,
-						],
-
-						[
-							this.#randomAttackCoords[0],
-							this.#randomAttackCoords[1] + 2,
-						],
+					let nextAttackCoords = [
+						this.#randomAttackCoords[0],
+						this.#prevAdjAttackCoords[1] + this.#attackDirection,
 					];
+					if (
+						hasShip(playerGameboard, this.#prevAdjAttackCoords) &&
+						validAttack(nextAttackCoords, playerGameboard)
+					) {
+						this.#attackQueue = [nextAttackCoords];
+					} else {
+						this.#attackDirection *= -1;
+						nextAttackCoords = [
+							this.#randomAttackCoords[0],
+							this.#randomAttackCoords[1] + this.#attackDirection,
+						];
+						if (validAttack(nextAttackCoords, playerGameboard))
+							this.#attackQueue = [nextAttackCoords];
+					}
 				} else {
-					this.#attackQueue = [
-						[
-							this.#randomAttackCoords[0] - 2,
-							this.#randomAttackCoords[1],
-						],
-						[
-							this.#randomAttackCoords[0] - 1,
-							this.#randomAttackCoords[1],
-						],
-
-						[
-							this.#randomAttackCoords[0] + 1,
-							this.#randomAttackCoords[1],
-						],
-						[
-							this.#randomAttackCoords[0] + 2,
-							this.#randomAttackCoords[1],
-						],
+					let nextAttackCoords = [
+						this.#prevAdjAttackCoords[0] + this.#attackDirection,
+						this.#randomAttackCoords[1],
 					];
+					if (
+						hasShip(playerGameboard, this.#prevAdjAttackCoords) &&
+						validAttack(nextAttackCoords, playerGameboard)
+					) {
+						this.#attackQueue = [nextAttackCoords];
+					} else {
+						this.#attackDirection *= -1;
+						nextAttackCoords = [
+							this.#randomAttackCoords[0] + this.#attackDirection,
+							this.#randomAttackCoords[1],
+						];
+						if (validAttack(nextAttackCoords, playerGameboard))
+							this.#attackQueue = [nextAttackCoords];
+					}
 				}
 			}
 			this.#filterAttackQueue(playerGameboard);
 
 			if (this.#attackQueue.length > 0) {
+				this.#attemptsOver = false;
 				const attackCoords = this.#attackQueue.shift();
 				this.#prevAdjAttackCoords = attackCoords;
 				return attackCoords;
@@ -87,6 +91,8 @@ export class Computer extends Player {
 	#handleRandomAttack(randomAttack, playerGameboard) {
 		this.#prevAdjAttackCoords = null;
 		this.#isEnemyShipVertical = null;
+		this.#attackDirection = null;
+		this.#attemptsOver = true;
 		this.#randomAttackCoords = randomAttack.call(this, playerGameboard);
 		if (hasShip(playerGameboard, this.#randomAttackCoords)) {
 			this.#attackQueue.push([
@@ -114,12 +120,24 @@ export class Computer extends Player {
 	}
 
 	#filterAttackQueue(playerGameboard) {
-		this.#attackQueue = this.#attackQueue.filter((coords) => {
-			const isInside = coordsWithinBounds(coords);
-			const notShot = !playerGameboard.alreadyShot(coords);
-			return isInside && notShot;
-		});
+		this.#attackQueue = this.#attackQueue.filter((coords) =>
+			validAttack(coords, playerGameboard),
+		);
 	}
+
+	#determineAttackDirection() {
+		if (this.#randomAttackCoords[0] != this.#prevAdjAttackCoords[0]) {
+			this.#attackDirection =
+				this.#prevAdjAttackCoords[0] - this.#randomAttackCoords[0];
+		} else {
+			this.#attackDirection =
+				this.#prevAdjAttackCoords[1] - this.#randomAttackCoords[1];
+		}
+	}
+}
+
+function validAttack(coords, playerGameboard) {
+	return coordsWithinBounds(coords) && !playerGameboard.alreadyShot(coords);
 }
 
 export function isShipVertical(initialCoordsArr, coordsArr) {
