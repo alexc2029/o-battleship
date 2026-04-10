@@ -89,7 +89,7 @@ export function GameController(players) {
 		DisplayController.announceComputerTurn();
 		DisplayController.toggleGameboardOpacities();
 	}
-	function computerRound() {
+	async function computerRound() {
 		const computerAttackCoords = players[1].decideAttack(
 			players[0].gameboard,
 		);
@@ -101,6 +101,7 @@ export function GameController(players) {
 			],
 		);
 		DisplayController.announcePlayerTurn(players[0].name);
+		await wait();
 		DisplayController.toggleGameboardOpacities();
 	}
 	DisplayController.announcePlayerTurn(players[0].name);
@@ -111,4 +112,8 @@ export function GameController(players) {
 		handleGameOver,
 		players,
 	);
+}
+
+function wait() {
+	return new Promise((resolve) => setTimeout(resolve, 500));
 }
